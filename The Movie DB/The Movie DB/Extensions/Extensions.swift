@@ -1,0 +1,160 @@
+//
+//  Extensions.swift
+//  The Movie DB
+//
+//  Created by Muhammad Jabbar on 6/28/20.
+//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+extension UIViewController {
+    
+    class func topMostController() -> UIViewController? {
+        if let rootViewController = UIApplication.shared.windows.last?.rootViewController {
+            var vc: UIViewController? = rootViewController
+            while (vc?.presentedViewController != nil) {
+                vc = vc?.presentedViewController
+            }
+            return rootViewController
+        }
+        return nil
+    }
+    
+    class func showAlert(withTitle title: String? = nil, message : String , success: (() -> Void)? = nil,  failure:(() -> Void)? = nil)  {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { action in
+            if let success = success {
+                success()
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            if let failure = failure {
+                failure()
+            }
+        }
+        alertController.addAction(OKAction)
+        alertController.addAction(cancel)
+        
+        topMostController()?.present(alertController, animated: true, completion: nil)
+    }
+    
+    /*
+    
+    class func showAlertView(withTitle title: String? = nil, message: String?, alertType: AlertType = .none, rightBtnTitle: String? = nil, leftBtnTitle: String? = nil, rightHandler: (() -> Void)? = nil, leftHandler: (() -> Void)? = nil, hideOnTouch: Bool = false, autoHide: Bool = false, duration: Double = 2.0) {
+        
+        let alertView = Bundle.main.loadNibNamed("AlertView", owner: self, options: nil)![0] as! AlertView
+        
+        alertView.hideOnTouch = hideOnTouch
+        
+        switch alertType {
+        case .none:
+            alertView.topImageOuterView.isHidden = true
+        case .success:
+            alertView.topImageView.image = UIImage(named: "alert-success")
+        case .failure:
+            alertView.topImageView.image = UIImage(named: "alert-error")
+        case .info:
+            alertView.topImageView.image = UIImage(named: "alert-info")
+        case .logout:
+            alertView.topImageView.image = UIImage(named: "alert-logout")
+        }
+        
+        alertView.titleLabel.text = title ?? ""
+        alertView.messageLabel.text = message ?? ""
+        
+        
+        if hideOnTouch {
+            alertView.btnLeft.isHidden = true
+            alertView.btnRight.isHidden = true
+            alertView.buttonsOuterView.isHidden = true
+        }
+        else if autoHide {
+            alertView.btnLeft.isHidden = true
+            alertView.btnRight.isHidden = true
+            alertView.buttonsOuterView.isHidden = true
+            perform(#selector(Utility.removeFromSuperView(_:)), with: alertView, afterDelay: duration)
+        }
+        else {
+            if rightBtnTitle != nil {
+                alertView.btnRight.setTitle(rightBtnTitle, for: .normal)
+                
+            } else {
+                alertView.btnRight.setTitle("OK", for: .normal)
+            }
+            
+            alertView.rightHandler = {
+                if let handler = rightHandler {
+                    handler()
+                }
+                Utility.removeFromSuperView(alertView)
+            }
+            
+            if leftBtnTitle != nil {
+                alertView.btnLeft.setTitle(leftBtnTitle, for: .normal)
+            } else {
+                alertView.btnLeft.isHidden = true
+            }
+            
+            alertView.leftHandler = {
+                if let handler = leftHandler {
+                    handler()
+                }
+                Utility.removeFromSuperView(alertView)
+            }
+        }
+        alertView.alpha = 0
+        alertView.frame = UIScreen.main.bounds
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .transitionCrossDissolve, animations: {
+                UIApplication.shared.keyWindow?.addSubview(alertView)
+                alertView.alpha = 1
+            }) { (completed) in
+                print(completed)
+            }
+        }
+     
+     @objc class func removeFromSuperView(_ view: UIView) {
+         UIView.animate(withDuration: 0.5, delay: 0, options: .transitionCrossDissolve, animations: {
+             view.alpha = 0
+         }) { (completed) in
+             view.removeFromSuperview()
+             print(completed)
+         }
+     }
+     
+    }
+ */
+    
+    
+}
+
+extension Dictionary {
+    func urlEncodedString() -> String {
+        let array = self.map({ dict -> String in
+            
+            let characterSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "-._~"))
+            
+            if let encodedKey = (dict.key as? String)?.addingPercentEncoding(withAllowedCharacters: characterSet), let encodedValue = (String(describing: dict.value) ).addingPercentEncoding(withAllowedCharacters: characterSet) {
+                return "\(encodedKey)=\(encodedValue)"
+            }
+            
+            return ""
+        })
+        
+        return array.joined(separator: "&")
+    }
+    
+    /// Returns a merged dictionary.
+    ///
+    /// For any values `a` and `b`,
+    /// `a + b` implies that `b` will be merged in `a`
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    static func merge (lhs: inout [Key : Value], rhs: [Key : Value]) {
+        lhs.merge(rhs) { (current, _) in current }
+    }
+}
