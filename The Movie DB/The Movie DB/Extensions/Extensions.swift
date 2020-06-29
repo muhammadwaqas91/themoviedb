@@ -140,7 +140,9 @@ extension UIImageView {
         let imageCache = NSCache<NSString, UIImage>()
 
         if let image = imageCache.object(forKey: urlString as NSString) {
-            self.image = image
+            DispatchQueue.main.async {
+                self.image = image
+            }
             if let success = success {
                 success(image)
             }

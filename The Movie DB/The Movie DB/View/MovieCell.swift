@@ -24,21 +24,21 @@ class MovieCell: UICollectionViewCell {
                 return
             }
 
-            viewModel.posterPath.addAndNotify(observer: self) {[weak self] (path) in
+            viewModel.posterPath.bind {[weak self] (path) in
                 if let path = viewModel.getFullPosterPath() {
                     self?.posterImageView.downloadImage(urlString: path)
                 }
             }
             
-            viewModel.title.addAndNotify(observer: self) {[weak self] (text) in
+            viewModel.title.bind {[weak self] (text) in
                 self?.titleLabel.text = text
             }
             
-            viewModel.releaseDate.addAndNotify(observer: self) {[weak self] (text) in
+            viewModel.releaseDate.bind {[weak self] (text) in
                 self?.releaseDateLabel.text = text
             }
             
-            viewModel.isFavorite.addAndNotify(observer: self) {[weak self] (isFavorite) in
+            viewModel.isFavorite.bind {[weak self] (isFavorite) in
                 self?.favButton.isSelected = isFavorite
             }
         }

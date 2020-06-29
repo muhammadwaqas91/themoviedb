@@ -40,11 +40,13 @@ class PopularMoviesVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Popular Movies"
+        
         collectionView.register(UINib(nibName: "MovieCell", bundle: .main), forCellWithReuseIdentifier: "MovieCell")
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        viewModel.allMovies.addAndNotify(observer: self) { [weak self] _ in
+        viewModel.allMovies.bind { [weak self] _ in
             
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()

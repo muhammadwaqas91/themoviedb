@@ -110,7 +110,7 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
         
         for genre in movie.genres ?? [] {
             if let name = genre.name {
-                genreString += name
+                genreString = genreString + " " + name
             }
         }
         
@@ -131,13 +131,13 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
     }
     
     func updateValues(movie: Movie) {
-        posterPath = Dynamic(movie.posterPath)
-        title = Dynamic(movie.title)
-        releaseDate = Dynamic(MovieViewModel.getReleaseYear(movie.releaseDate))
+        posterPath.value = movie.posterPath
+        title.value = movie.title
+        releaseDate.value = MovieViewModel.getReleaseYear(movie.releaseDate)
         
-        isFavorite = Dynamic(movie.isFavorite ?? false)
+        isFavorite.value = movie.isFavorite ?? false
         
-        backdropPath = Dynamic(movie.backdropPath)
+        backdropPath.value = movie.backdropPath
         
         var genreString: String = ""
         
@@ -147,10 +147,10 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
             }
         }
         
-        genreTitle = Dynamic(genreString)
-        duration = Dynamic(MovieViewModel.getDuration(movie.runtime))
-        overviewHeading = Dynamic(movie.tagline)
-        overview = Dynamic(movie.overview)
+        genreTitle.value = genreString
+        duration.value = MovieViewModel.getDuration(movie.runtime)
+        overviewHeading.value = movie.tagline
+        overview.value = movie.overview
     }
     
     

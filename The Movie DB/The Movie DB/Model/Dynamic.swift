@@ -8,36 +8,61 @@
 
 import Foundation
 
-class Dynamic<T> {
-    
-    typealias CompletionHandler = ((T) -> Void)
-    
-    var value : T {
-        didSet {
-            self.notify()
-        }
+final class Dynamic<T> {
+  //1
+  typealias Listener = (T) -> Void
+  var listener: Listener?
+  //2
+  var value: T {
+    didSet {
+      listener?(value)
     }
-    
-    private var observers = [String: CompletionHandler]()
-    
-    init(_ value: T) {
-        self.value = value
-    }
-    
-    public func addObserver(_ observer: NSObject, completionHandler: @escaping CompletionHandler) {
-        observers[observer.description] = completionHandler
-    }
-    
-    public func addAndNotify(observer: NSObject, completionHandler: @escaping CompletionHandler) {
-        self.addObserver(observer, completionHandler: completionHandler)
-        self.notify()
-    }
-    
-    private func notify() {
-        observers.forEach({ $0.value(value) })
-    }
-    
-    deinit {
-        observers.removeAll()
-    }
+  }
+  //3
+  init(_ value: T) {
+    self.value = value
+  }
+  //4
+  func bind(listener: Listener?) {
+    self.listener = listener
+    listener?(value)
+  }
 }
+
+
+
+
+//class Dynamic<T> {
+//    
+//    typealias CompletionHandler = ((T) -> Void)
+//    
+//    var value : T {
+//        didSet {
+//            self.notify()
+//        }
+//    }
+//    
+//    private var observers = [String: CompletionHandler]()
+//    
+//    init(_ value: T) {
+//        self.value = value
+//    }
+//    
+//    public func addObserver(_ observer: NSObject, completionHandler: @escaping CompletionHandler) {
+//        observers[observer.description] = completionHandler
+//    }
+//    
+//    public func addAndNotify(observer: NSObject, completionHandler: @escaping CompletionHandler) {
+//        self.addObserver(observer, completionHandler: completionHandler)
+//        self.notify()
+//    }
+//    
+//    private func notify() {
+//        print(observers)
+//        observers.forEach({ $0.value(value) })
+//    }
+//    
+//    deinit {
+//        observers.removeAll()
+//    }
+//}

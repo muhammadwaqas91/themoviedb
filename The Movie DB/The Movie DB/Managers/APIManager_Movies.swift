@@ -14,11 +14,6 @@ extension APIManager {
     
     // MARK: - Popular
     static func getPopularMovies(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
-        
-        APIManager.getConfigurations(success: { configuration in
-            APIManager.configuration = configuration
-        })
-
         APIManager.request(endPoint: Constants.popular, params:params, success: { (movies: MovieList) in
             success(movies)
         }, failure: { message in
