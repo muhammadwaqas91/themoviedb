@@ -22,7 +22,10 @@ extension UIViewController {
         return nil
     }
     
-    class func showAlert(withTitle title: String? = nil, message : String , success: (() -> Void)? = nil,  failure:(() -> Void)? = nil)  {
+    func showAlert(withTitle title: String? = nil, message : String? , success: (() -> Void)? = nil,  failure:(() -> Void)? = nil)  {
+        if title == nil && message == nil {
+            return
+        }
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default) { action in
             if let success = success {
@@ -37,7 +40,7 @@ extension UIViewController {
         alertController.addAction(OKAction)
         alertController.addAction(cancel)
         
-        topMostController()?.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     /*
@@ -128,6 +131,52 @@ extension UIViewController {
  */
     
     
+}
+
+extension UIImageView {
+ 
+    func downloadImage(urlString: String, success: ((_ image: UIImage?) -> Void)? = nil, failure: ((_ error: Error?) -> Void)? = nil) {
+        
+        let imageCache = NSCache<NSString, UIImage>()
+
+        if let image = imageCache.object(forKey: urlString as NSString) {
+            self.image = image
+            if let success = success {
+                success(image)
+            }
+        } else {
+            guard let url = URL(string: urlString) else {
+                print("failed to create url")
+                return
+            }
+            
+            let request = URLRequest(url: url)
+            let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+                
+                // response received, now switch back to main queue
+                DispatchQueue.main.async {
+                    if let error = error {
+                        if let failure = failure {
+                            failure(error)
+                        }
+                    }
+                    else if let data = data, let image = UIImage(data: data) {
+                        imageCache.setObject(image, forKey: url.absoluteString as NSString)
+                        self.image = image
+                        if let success = success {
+                            success(image)
+                        }
+                    } else {
+                        if let failure = failure {
+                            failure(nil)
+                        }
+                    }
+                }
+            }
+            
+            task.resume()
+        }
+    }
 }
 
 extension Dictionary {

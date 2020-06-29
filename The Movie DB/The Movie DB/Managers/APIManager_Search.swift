@@ -15,11 +15,13 @@ extension APIManager {
     // query
     // page
     
-    static func searchForMovies(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: @escaping (String?) -> Void) {
+    static func searchForMovies(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
         APIManager.request(endPoint: Constants.search, params: params, success: { (popularMovies: MovieList) in
             success(popularMovies)
         }, failure: { message in
-            failure(message)
+            if let failure = failure {
+                failure(message)
+            }
         })
     }
 }

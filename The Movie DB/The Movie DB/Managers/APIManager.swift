@@ -11,11 +11,13 @@ import UIKit
 
 struct Constants {
     static let API_Key = "e5ea3092880f4f3c25fbc537e9b37dc1"
-    static let baseURL = "http://api.themoviedb.org/3/"
+    static let baseURL = "http://api.themoviedb.org/3"
     
-    static let popular = "movie/popular"
-    static let movie = "movie" // Get the primary information about a movie.
-    static let search = "search/movie" // Search for movies.
+    static let popular = "/movie/popular"
+    static let search = "/search/movie" // Search for movies.
+    static let movie = "/movie" // Get the primary information about a movie.
+    
+    static let configuration = "/configuration"
     
 }
 
@@ -27,9 +29,8 @@ struct QueryFail: Decodable {
     let statusMessage : String?
 }
 
-
 struct APIManager {
-    static func request<T: Decodable> (httpMethod: String = "GET", endPoint: String, params: [String: Any] = [:], success: @escaping (T) -> Void, failure: @escaping (String?) -> Void) {
+    static func request<T: Decodable> (httpMethod: String = "GET", endPoint: String, params: [String: Any] = [:], success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) {
         
         // check network connectivity
         
@@ -40,18 +41,18 @@ struct APIManager {
     
     private static func sendRequest(httpMethod: String = "GET", endPoint: String, params: [String: Any] = [:], completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
         
-        var urlString: String = Constants.baseURL + endPoint
-        
         var allParams: [String: Any] = ["api_key": Constants.API_Key] // default params
         if params.keys.count > 0 {
             Dictionary.merge(lhs: &allParams, rhs: params)
         }
         
+        var urlString: String = Constants.baseURL + endPoint
+        
         if httpMethod == "GET" {
             let urlEncodedString = allParams.urlEncodedString()
             urlString = urlString + (urlEncodedString.count > 0 ? "?" + urlEncodedString : urlEncodedString)
         }
-        
+                
         print("URL STRING: \(urlString)")
         
         guard let url = URL(string: urlString) else {
@@ -74,10 +75,11 @@ struct APIManager {
         task.resume()
     }
     
-    private static func parseResponse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: @escaping (String?) -> Void) {
+    private static func parseResponse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) {
         if let error = error {
-            UIViewController.showAlert(message: error.localizedDescription)
-            failure(error.localizedDescription)
+            if let failure = failure {
+                failure(error.localizedDescription)
+            }
         }
         else if let data = data {
             do {
@@ -91,26 +93,34 @@ struct APIManager {
                     }
                     else {
                         let failed = try decoder.decode(QueryFail.self, from: data)
-                        UIViewController.showAlert(message: failed.statusMessage ?? "")
-                        failure(failed.statusMessage)
+                        if let failure = failure {
+                            failure(failed.statusMessage)
+                        }
                     }
                 }
                 
             }
             catch let DecodingError.dataCorrupted(context) {
                 print("DecodingError.dataCorrupted '\(context)'")
-//                UIViewController.showAlert(message: context.debugDescription)
-//                failure(context.debugDescription)
+                if let failure = failure {
+                    failure(context.debugDescription)
+                }
             } catch let DecodingError.keyNotFound(key, context) {
                 print("DecodingError.keyNotFound")
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                if let failure = failure {
+                    failure(context.debugDescription)
+                }
                 
             } catch let DecodingError.valueNotFound(value, context) {
                 print("DecodingError.valueNotFound")
                 
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                if let failure = failure {
+                    failure(context.debugDescription)
+                }
                 
             } catch let DecodingError.typeMismatch(type, context)  {
                 print("DecodingError.typeMismatch")
@@ -121,10 +131,14 @@ struct APIManager {
                 
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
+                if let failure = failure {
+                    failure(context.debugDescription)
+                }
                 
             } catch {
-                UIViewController.showAlert(message: error.localizedDescription)
-                failure(error.localizedDescription)
+                if let failure = failure {
+                    failure(error.localizedDescription)
+                }
             }
         }
         else {
