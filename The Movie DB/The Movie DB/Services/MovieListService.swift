@@ -34,8 +34,8 @@ final class MovieListService : ResponseHandler, MovieListServiceProtocol {
 //        cancelPreviousTask()
         
         let urlString = encodedString(endPoint: Constants.popular, params: params)
-        
-        task = RequestService().sendRequest(urlString: urlString, method: .GET, completion: ResponseHandler().result(success: success, failure: failure))
+       let headers = ["Content-Type" : "application/json; charset=utf-8"]
+        task = RequestService().sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: ResponseHandler().result(success: success, failure: failure))
     }
     
 }
