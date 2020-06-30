@@ -1,18 +1,18 @@
 //
-//  ConfigurationService.swift
+//  SearchService.swift
 //  The Movie DB
 //
-//  Created by Muhammad Waqas on 6/30/20.
+//  Created by Muhammad Waqas on 7/1/20.
 //  Copyright © 2020 Muhammad Jabbar. All rights reserved.
 //
 
 import Foundation
 
-protocol ConfigurationServiceProtocol : class {
-    func getConfigurations(params: [String: Any], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)?)
+protocol SearchServiceProtocol : class {
+    func searchByQuery(params: [String: Any], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)?)
 }
 
-extension ConfigurationService {
+extension SearchService {
     func cancelPreviousTask() {
         if let task = task {
             task.cancel()
@@ -21,18 +21,18 @@ extension ConfigurationService {
     }
 }
 
-final class ConfigurationService : ResponseHandler, ConfigurationServiceProtocol {
+final class SearchService : ResponseHandler, SearchServiceProtocol {
     
-    static let shared = ConfigurationService()
+    static let shared = SearchService()
     var configuration: Configuration?
     var task : URLSessionTask?
     
-    func getConfigurations(params: [String: Any] = [:], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)? = nil) {
+    func searchByQuery(params: [String: Any] = [:], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)? = nil) {
         
         // cancel previous request if already in progress
 //        cancelPreviousTask()
         
-        let urlString = encodedString(endPoint: Constants.configuration, params: params)
+        let urlString = encodedString(endPoint: Constants.search, params: params)
         let headers = ["Content-Type" : "application/json; charset=utf-8"]
         task = RequestService().sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: ResponseHandler().result(success: success, failure: failure))
     }

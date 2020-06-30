@@ -42,6 +42,7 @@
 		FDE28F8924AB861C00E8D841 /* JSONDecoderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8824AB861C00E8D841 /* JSONDecoderHelper.swift */; };
 		FDE28F8E24ABB24900E8D841 /* MovieListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8D24ABB24900E8D841 /* MovieListService.swift */; };
 		FDE28F9024ABBB5000E8D841 /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */; };
+		FDE28F9224ABD73600E8D841 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9124ABD73600E8D841 /* SearchService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		FDE28F8824AB861C00E8D841 /* JSONDecoderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderHelper.swift; sourceTree = "<group>"; };
 		FDE28F8D24ABB24900E8D841 /* MovieListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListService.swift; sourceTree = "<group>"; };
 		FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
+		FDE28F9124ABD73600E8D841 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +302,7 @@
 				FDE28F7C24AB830400E8D841 /* MovieService.swift */,
 				FDE28F8D24ABB24900E8D841 /* MovieListService.swift */,
 				FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */,
+				FDE28F9124ABD73600E8D841 /* SearchService.swift */,
 				FDE28F8A24AB867B00E8D841 /* Network */,
 				FDE28F8B24AB86B200E8D841 /* Parser */,
 			);
@@ -550,6 +553,7 @@
 				FD70DDEB24A9988600FCFAAF /* MovieViewModel.swift in Sources */,
 				FD2EC4E224A7A7B800895D94 /* The_Movie_DB.xcdatamodeld in Sources */,
 				FD70DDE324A9549100FCFAAF /* Dynamic.swift in Sources */,
+				FDE28F9224ABD73600E8D841 /* SearchService.swift in Sources */,
 				FD70DDDD24A94AF100FCFAAF /* MovieCell.swift in Sources */,
 				FD2EC4E124A7A7B800895D94 /* SceneDelegate.swift in Sources */,
 			);

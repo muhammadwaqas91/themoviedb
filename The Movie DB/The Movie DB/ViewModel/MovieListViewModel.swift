@@ -41,18 +41,16 @@ class MovieListViewModel: MovieListProtocol {
     }
     
     func fetchPopularMovies(after: Int) {
-        if after == allMovies.value.count - 1 && page < totalPages {
-            if page < totalPages {
-                let next = page + 1
-                let params: [String: Any] = ["page": next]
-                service?.fetchPopularMovies(params: params, success: {[weak self] (movieList) in
-                    self?.updateValues(movieList: movieList)
+        if (after == allMovies.value.count - 1) || allMovies.value.count == 0 && page < totalPages  {
+            let next = page + 1
+            let params: [String: Any] = ["page": next]
+            service?.fetchPopularMovies(params: params, success: {[weak self] (movieList) in
+                self?.updateValues(movieList: movieList)
                 }, failure: {[weak self] (message) in
                     if let onErrorHandler = self?.onErrorHandler {
                         onErrorHandler(message)
                     }
-                })
-            }
+            })
         }
     }
     

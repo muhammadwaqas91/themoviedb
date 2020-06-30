@@ -30,9 +30,6 @@ final class JSONDecoderHelper {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     if httpURLResponse.statusCode == 200 {
-//                        let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                        print(json)
-//                        return
                         let result = try decoder.decode(T.self, from: data)
                         success(result)
                     }

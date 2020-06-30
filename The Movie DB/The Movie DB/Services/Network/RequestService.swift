@@ -32,7 +32,7 @@ final class RequestService {
             request.cachePolicy = .returnCacheDataDontLoad
         }
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = session.dataTask(with: request) { (data, response, error) in
             // response received, now switch back to main queue
             DispatchQueue.main.async {
               completion(data, response, error)
