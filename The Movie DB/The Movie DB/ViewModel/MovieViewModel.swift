@@ -2,8 +2,8 @@
 //  MovieViewModel.swift
 //  The Movie DB
 //
-//  Created by Muhammad Jabbar on 6/29/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Created by Muhammad Waqas on 6/29/20.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import Foundation
@@ -33,8 +33,8 @@ extension MovieViewModelProtocol {
     
     func getFullPosterPath() -> String? {
         
-        if let images = APIManager.configuration?.images, let first = images.posterSizes.first, let path = posterPath.value {
-            let fullPath = images.baseUrl + first + path
+        if let images = ConfigurationService.shared.configuration?.images, let first = images.posterSizes?.first, let path = posterPath.value, let baseUrl = images.baseUrl {
+            let fullPath = baseUrl + first + path
             return fullPath
         }
         return nil
@@ -42,8 +42,8 @@ extension MovieViewModelProtocol {
     
     func getFullBackdropPath() -> String? {
         
-        if let images = APIManager.configuration?.images, let first = images.backdropSizes.first, let path = backdropPath.value {
-            let fullPath = images.baseUrl + first + path
+        if let images = ConfigurationService.shared.configuration?.images, let first = images.backdropSizes?.first, let path = backdropPath.value, let baseUrl = images.baseUrl {
+            let fullPath = baseUrl + first + path
             return fullPath
         }
         return nil
@@ -81,9 +81,8 @@ extension MovieViewModelProtocol {
     }
 }
  
-class MovieViewModel: NSObject, MovieViewModelProtocol {
+class MovieViewModel: NSObject, MovieViewModelProtocol, MovieServiceProtocol {
     
-    var movie: Movie
     var posterPath: Dynamic<String?>
     var title: Dynamic<String?>
     var releaseDate: Dynamic<String?>
@@ -96,8 +95,12 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
     var overview: Dynamic<String?>
     var onErrorHandler: ((String?) -> Void)?
     
-    init(withMovie movie: Movie) {
+    var movie: Movie
+    weak var service: MovieServiceProtocol?
+    
+    init(withMovie movie: Movie, service: MovieServiceProtocol?) {
         self.movie = movie
+        self.service = service
         
         posterPath = Dynamic(movie.posterPath)
         title = Dynamic(movie.title)
@@ -121,13 +124,18 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
     }
     
     func fetchMovieDetail() {
-        APIManager.getMovieDetail(movie_id: movie.id, success: {[weak self] (movie) in
+        
+        service?.getMovieDetail(movie_id: movie.id, params: [:], success: {[weak self] (movie) in
             self?.updateValues(movie: movie)
             }, failure: { message in
                 if let handler = self.onErrorHandler {
                     handler(message)
                 }
         })
+    }
+    
+    func getMovieDetail(movie_id: Int, params: [String : Any], success: @escaping (Movie) -> (), failure: ((String?) -> Void)?) {
+//        service.fetchMovieDetail
     }
     
     func updateValues(movie: Movie) {

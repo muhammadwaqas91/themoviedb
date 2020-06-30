@@ -2,8 +2,8 @@
 //  The_Movie_DBTests.swift
 //  The Movie DBTests
 //
-//  Created by Muhammad Jabbar on 6/27/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Created by Muhammad Waqas on 6/27/20.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import XCTest

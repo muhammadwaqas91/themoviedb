@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  The Movie DB
 //
-//  Created by Muhammad Jabbar on 6/27/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Created by Muhammad Waqas on 6/27/20.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import UIKit
@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        APIManager.getConfigurations(success: { configuration in
-            APIManager.configuration = configuration
+        ConfigurationService.shared.getConfigurations(success: { (configuration) in
+            ConfigurationService.shared.configuration = configuration
         })
         
         return true

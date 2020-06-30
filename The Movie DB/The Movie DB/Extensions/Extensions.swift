@@ -2,8 +2,8 @@
 //  Extensions.swift
 //  The Movie DB
 //
-//  Created by Muhammad Jabbar on 6/28/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Created by Muhammad Waqas on 6/28/20.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import Foundation

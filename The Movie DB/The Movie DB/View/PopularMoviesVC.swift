@@ -2,8 +2,8 @@
 //  PopularMoviesVC.swift
 //  The Movie DB
 //
-//  Created by Muhammad Jabbar on 6/29/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Created by Muhammad Waqas on 6/29/20.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import Foundation
@@ -33,7 +33,7 @@ class PopularMoviesVC: BaseVC {
     @IBOutlet weak var collectionView: UICollectionView!
     
     lazy var viewModel : MovieListViewModel = {
-        let viewModel = MovieListViewModel()
+        let viewModel = MovieListViewModel(service: MovieListService.shared)
         return viewModel
     }()
     
@@ -86,7 +86,7 @@ extension PopularMoviesVC: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
         let movie = viewModel.allMovies.value[indexPath.row]
-        cell.viewModel = MovieViewModel(withMovie: movie)
+        cell.viewModel = MovieViewModel(withMovie: movie, service: MovieService.shared)
         
         return cell
     }
@@ -103,7 +103,7 @@ extension PopularMoviesVC: UICollectionViewDelegate {
         }
             
         let movie = viewModel.allMovies.value[indexPath.row]
-        let newViewModel = MovieViewModel(withMovie: movie)
+        let newViewModel = MovieViewModel(withMovie: movie, service: MovieService.shared)
         Router.showMovieDetailVC(from: self, viewModel: newViewModel)
     }
 }
