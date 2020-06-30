@@ -30,9 +30,16 @@ struct QueryFail: Decodable {
 }
 
 struct APIManager {
+    
     static func request<T: Decodable> (httpMethod: String = "GET", endPoint: String, params: [String: Any] = [:], success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) {
         
         // check network connectivity
+        guard let isReachable = Reachability()?.isReachable, isReachable else {
+            if let failure = failure {
+                failure("Internet is not available")
+            }
+            return
+        }
         
         APIManager.sendRequest(httpMethod: httpMethod, endPoint: endPoint, params: params) { (data, response, error) in
             parseResponse(data: data, response: response, error: error, success: success, failure: failure)

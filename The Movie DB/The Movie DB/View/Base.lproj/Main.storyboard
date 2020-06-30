@@ -7,44 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Popular MoviesVC-->
-        <scene sceneID="86P-R9-MFD">
-            <objects>
-                <viewController id="3HP-3X-RY9" customClass="PopularMoviesVC" customModule="The_Movie_DB" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="irU-4U-wOm">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CBX-pj-3uW">
-                                <rect key="frame" x="20" y="88" width="374" height="774"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VfH-YA-qIK">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="CBX-pj-3uW" firstAttribute="top" secondItem="irU-4U-wOm" secondAttribute="topMargin" id="0fx-65-PmT"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="CBX-pj-3uW" secondAttribute="bottom" id="NWQ-gf-s3F"/>
-                            <constraint firstItem="CBX-pj-3uW" firstAttribute="leading" secondItem="irU-4U-wOm" secondAttribute="leadingMargin" id="V6B-RM-rGf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CBX-pj-3uW" secondAttribute="trailing" id="Ve7-Hw-CAT"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="S5D-BQ-Zfj"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="6m2-qp-a5F"/>
-                    <connections>
-                        <outlet property="collectionView" destination="CBX-pj-3uW" id="bza-vO-Dw6"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kfC-RN-QbT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3362" y="-149"/>
-        </scene>
         <!--MovieDetailVC-->
         <scene sceneID="ZdQ-Cy-0zV">
             <objects>
@@ -221,12 +183,57 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="3HP-3X-RY9" kind="relationship" relationship="rootViewController" id="MgY-2R-Rfa"/>
+                        <segue destination="nHM-lO-ywO" kind="relationship" relationship="rootViewController" id="yIA-4P-1CI"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uC2-79-2gE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2536" y="-149"/>
+        </scene>
+        <!--Popular MoviesVC-->
+        <scene sceneID="1Xn-aT-lcO">
+            <objects>
+                <viewController id="nHM-lO-ywO" customClass="PopularMoviesVC" customModule="The_Movie_DB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xM5-fr-u98">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="4lJ-s5-P1M">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-TR-e5g">
+                                <rect key="frame" x="20" y="144" width="374" height="718"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rmN-Xx-Qdw">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="z3K-TR-e5g" secondAttribute="trailing" id="3p3-08-ksO"/>
+                            <constraint firstItem="z3K-TR-e5g" firstAttribute="top" secondItem="4lJ-s5-P1M" secondAttribute="bottom" id="JZi-Lg-d2Y"/>
+                            <constraint firstItem="z3K-TR-e5g" firstAttribute="leading" secondItem="xM5-fr-u98" secondAttribute="leadingMargin" id="K84-QS-6cu"/>
+                            <constraint firstItem="4lJ-s5-P1M" firstAttribute="top" secondItem="nDF-ny-tsV" secondAttribute="top" id="geu-rX-Kth"/>
+                            <constraint firstItem="4lJ-s5-P1M" firstAttribute="trailing" secondItem="nDF-ny-tsV" secondAttribute="trailing" id="kXV-Mp-ioZ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="z3K-TR-e5g" secondAttribute="bottom" id="pgD-dX-PKI"/>
+                            <constraint firstItem="4lJ-s5-P1M" firstAttribute="leading" secondItem="nDF-ny-tsV" secondAttribute="leading" id="ymU-uM-C5o"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nDF-ny-tsV"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="tsa-vQ-b2M"/>
+                    <connections>
+                        <outlet property="collectionView" destination="z3K-TR-e5g" id="XEW-VQ-RsQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LUj-Y1-7Ze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3370.8695652173915" y="-139.33035714285714"/>
         </scene>
     </scenes>
     <resources>

@@ -57,7 +57,7 @@ class PopularMoviesVC: BaseVC {
             self?.showAlert(message: message)
         }
         
-        self.viewModel.fetchMovies()
+        self.viewModel.fetchPopularMovies(after: 0)
         
         setFlowLayoutSize()
     }
@@ -69,7 +69,7 @@ class PopularMoviesVC: BaseVC {
         
         let height = collectionView.frame.size.height
         let width = collectionView.frame.size.width
-        layout.itemSize = CGSize(width: width * 0.45, height: height * 0.40)
+        layout.itemSize = CGSize(width: width * 0.45, height: height * 0.45)
         
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
@@ -94,9 +94,7 @@ extension PopularMoviesVC: UICollectionViewDataSource {
 
 extension PopularMoviesVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == viewModel.allMovies.value.count - 1 && viewModel.page < viewModel.totalPages {
-            viewModel.fetchMovies()
-        }
+        viewModel.fetchPopularMovies(after:indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -107,6 +105,7 @@ extension PopularMoviesVC: UICollectionViewDelegate {
         let movie = viewModel.allMovies.value[indexPath.row]
         let newViewModel = MovieViewModel(withMovie: movie)
         Router.showMovieDetailVC(from: self, viewModel: newViewModel)
-        
     }
 }
+
+
