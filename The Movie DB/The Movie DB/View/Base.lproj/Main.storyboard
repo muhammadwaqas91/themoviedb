@@ -190,10 +190,10 @@
             </objects>
             <point key="canvasLocation" x="2536" y="-149"/>
         </scene>
-        <!--Popular MoviesVC-->
+        <!--Movie ListVC-->
         <scene sceneID="1Xn-aT-lcO">
             <objects>
-                <viewController id="nHM-lO-ywO" customClass="PopularMoviesVC" customModule="The_Movie_DB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieListVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nHM-lO-ywO" customClass="MovieListVC" customModule="The_Movie_DB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xM5-fr-u98">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -229,6 +229,7 @@
                     <navigationItem key="navigationItem" id="tsa-vQ-b2M"/>
                     <connections>
                         <outlet property="collectionView" destination="z3K-TR-e5g" id="XEW-VQ-RsQ"/>
+                        <outlet property="searchBar" destination="4lJ-s5-P1M" id="tmn-eA-XVW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUj-Y1-7Ze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

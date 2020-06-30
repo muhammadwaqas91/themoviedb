@@ -23,24 +23,28 @@ extension UIViewController {
     }
     
     func showAlert(withTitle title: String? = nil, message : String? , success: (() -> Void)? = nil,  failure:(() -> Void)? = nil)  {
-        if title == nil && message == nil {
-            return
-        }
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default) { action in
-            if let success = success {
-                success()
-            }
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { action in
-            if let failure = failure {
-                failure()
-            }
-        }
-        alertController.addAction(OKAction)
-        alertController.addAction(cancel)
         
-        present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            if title == nil && message == nil {
+                return
+            }
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let OKAction = UIAlertAction(title: "OK", style: .default) { action in
+                if let success = success {
+                    success()
+                }
+            }
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { action in
+                if let failure = failure {
+                    failure()
+                }
+            }
+            alertController.addAction(OKAction)
+            alertController.addAction(cancel)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
     }
     
     /*

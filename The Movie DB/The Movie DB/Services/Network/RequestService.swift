@@ -29,7 +29,7 @@ final class RequestService {
         
         // if internet is not available
         if let reachability = Reachability(), !reachability.isReachable {
-            request.cachePolicy = .returnCacheDataDontLoad
+            request.cachePolicy = .returnCacheDataElseLoad
         }
         
         let task = session.dataTask(with: request) { (data, response, error) in

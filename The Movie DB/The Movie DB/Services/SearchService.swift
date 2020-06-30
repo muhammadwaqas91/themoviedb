@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SearchServiceProtocol : class {
-    func searchByQuery(params: [String: Any], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)?)
+    func search(params: [String: Any], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)?)
 }
 
 extension SearchService {
@@ -24,13 +24,12 @@ extension SearchService {
 final class SearchService : ResponseHandler, SearchServiceProtocol {
     
     static let shared = SearchService()
-    var configuration: Configuration?
     var task : URLSessionTask?
     
-    func searchByQuery(params: [String: Any] = [:], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)? = nil) {
+    func search(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
         
         // cancel previous request if already in progress
-//        cancelPreviousTask()
+        cancelPreviousTask()
         
         let urlString = encodedString(endPoint: Constants.search, params: params)
         let headers = ["Content-Type" : "application/json; charset=utf-8"]

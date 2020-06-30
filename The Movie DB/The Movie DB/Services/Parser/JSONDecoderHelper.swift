@@ -19,7 +19,7 @@ struct QueryFail: Decodable {
 final class JSONDecoderHelper {
     static func parse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) {
         if let error = error {
-            if let failure = failure {
+            if let failure = failure, error.localizedDescription != "cancelled" {
                 failure(error.localizedDescription)
             }
         }

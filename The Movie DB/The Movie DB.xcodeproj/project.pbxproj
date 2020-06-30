@@ -43,6 +43,7 @@
 		FDE28F8E24ABB24900E8D841 /* MovieListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8D24ABB24900E8D841 /* MovieListService.swift */; };
 		FDE28F9024ABBB5000E8D841 /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */; };
 		FDE28F9224ABD73600E8D841 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9124ABD73600E8D841 /* SearchService.swift */; };
+		FDE28F9424ABE66300E8D841 /* SearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		FDE28F8D24ABB24900E8D841 /* MovieListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListService.swift; sourceTree = "<group>"; };
 		FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
 		FDE28F9124ABD73600E8D841 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				FD70DDE624A9669A00FCFAAF /* MovieListViewModel.swift */,
+				FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */,
 				FD70DDEA24A9988600FCFAAF /* MovieViewModel.swift */,
 			);
 			path = ViewModel;
@@ -533,6 +536,7 @@
 			files = (
 				FD70DDF524AA0BEA00FCFAAF /* MovieDetailVC.swift in Sources */,
 				FDE28F8324AB858700E8D841 /* RequestService.swift in Sources */,
+				FDE28F9424ABE66300E8D841 /* SearchListViewModel.swift in Sources */,
 				FD70DDD424A7E5A700FCFAAF /* Extensions.swift in Sources */,
 				FD0D180524AAA69600BE5CB2 /* Reachability.swift in Sources */,
 				FDE28F7F24AB848700E8D841 /* RequestFactory.swift in Sources */,

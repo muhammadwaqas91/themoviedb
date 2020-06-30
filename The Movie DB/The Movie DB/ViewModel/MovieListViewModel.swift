@@ -8,13 +8,6 @@
 
 import Foundation
 
-protocol SearchMoviesProtocol {
-    var query: String {get}
-    func searchBarActivated()
-    func searchFor(query: String)
-    func searchEnded()
-}
-
 protocol ErrorHandlerProtocol {
     var onErrorHandler : ((String?) -> Void)? { get }
 }
@@ -24,7 +17,7 @@ protocol MovieListProtocol: ErrorHandlerProtocol {
     var totalPages: Int { get set }
     var allMovies: Dynamic<[Movie]>  { get set }
     
-    func fetchPopularMovies(after: Int)
+    func fetchMovies(after: Int)
     func updateValues(movieList: MovieList)
 }
 
@@ -35,16 +28,19 @@ class MovieListViewModel: MovieListProtocol {
     
     var onErrorHandler: ((String?) -> Void)? = nil
     
-    weak var service: MovieListServiceProtocol?
-    init(service: MovieListServiceProtocol) {
-        self.service = service
+    weak var popularService: MovieListServiceProtocol?
+    weak var searchService: SearchServiceProtocol?
+    
+    init(_ popularService: MovieListServiceProtocol, _ searchService: SearchServiceProtocol) {
+        self.popularService = popularService
+        self.searchService = searchService
     }
     
-    func fetchPopularMovies(after: Int) {
+    func fetchMovies(after: Int) {
         if (after == allMovies.value.count - 1) || allMovies.value.count == 0 && page < totalPages  {
             let next = page + 1
             let params: [String: Any] = ["page": next]
-            service?.fetchPopularMovies(params: params, success: {[weak self] (movieList) in
+            popularService?.fetchPopularMovies(params: params, success: {[weak self] (movieList) in
                 self?.updateValues(movieList: movieList)
                 }, failure: {[weak self] (message) in
                     if let onErrorHandler = self?.onErrorHandler {
@@ -53,6 +49,7 @@ class MovieListViewModel: MovieListProtocol {
             })
         }
     }
+    
     
     func updateValues(movieList: MovieList) {
         page = movieList.page
