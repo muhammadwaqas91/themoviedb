@@ -53,6 +53,9 @@ class MovieListVC: BaseVC {
         
         collectionView.register(UINib(nibName: "MovieCell", bundle: .main), forCellWithReuseIdentifier: "MovieCell")
         
+        collectionView.register(UINib(nibName: "HistoryTagView", bundle: .main), forSupplementaryViewOfKind: "UICollectionElementKindSectionHeader", withReuseIdentifier: "HistoryTagView")
+                                
+        
         viewModelDataSourceDel = MovieListDataSourceDelegate(viewModel)
         searchViewModelDataSourceDel = MovieListDataSourceDelegate(searchViewModel)
         
@@ -60,6 +63,9 @@ class MovieListVC: BaseVC {
         
         collectionView.dataSource = viewModelDataSourceDel
         collectionView.delegate = viewModelDataSourceDel
+        
+        viewModelDataSourceDel?.delegate = self
+        searchViewModelDataSourceDel?.delegate = self
         
         searchBar.movieSearchBarDelegate = self
         
@@ -109,26 +115,57 @@ class MovieListVC: BaseVC {
 }
 
 extension MovieListVC: MovieSearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String, hasText: Bool) {
+    
+    
+    func showHistoryTags(_ showTags: Bool, _ continueSearch: Bool) {
+        
+        viewModelDataSourceDel?.showTags = showTags
+        searchViewModelDataSourceDel?.showTags = showTags
+        
+        if continueSearch {
+            title = "Search Results"
+        }
+        else {
+            title = "Popular Movies"
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    func searchBarTextDidChange(_ text: String, _ hasText: Bool) {
+        viewModelDataSourceDel?.showTags = false
+        searchViewModelDataSourceDel?.showTags = false
         if hasText {
             title = "Search Results"
-            
             collectionView.delegate = searchViewModelDataSourceDel
             collectionView.dataSource = searchViewModelDataSourceDel
             searchViewModel.fetchMovies(query: searchBar.text ?? "")
         }
         else {
+//            viewModelDataSourceDel?.showTags = true
+//            searchViewModelDataSourceDel?.showTags = true
             title = "Popular Movies"
             collectionView.dataSource = viewModelDataSourceDel
             collectionView.delegate = viewModelDataSourceDel
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
-        collectionView.reloadData()
     }
 }
+
 
 extension MovieListVC: MovieListDataSourceDelegateProtocol {
     func openMovie(_ viewModel: MovieViewModel) {
         Router.showMovieDetailVC(from: self, viewModel: viewModel)
+    }
+    
+    func tagPressed(_ tag: String) {
+        searchBar.text = tag
+        collectionView.delegate = searchViewModelDataSourceDel
+        collectionView.dataSource = searchViewModelDataSourceDel
+        searchViewModel.fetchMovies(query: searchBar.text ?? "")
     }
 }
 

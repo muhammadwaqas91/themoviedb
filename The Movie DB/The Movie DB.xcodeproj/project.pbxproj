@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,6 +46,8 @@
 		FDE28F9424ABE66300E8D841 /* SearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */; };
 		FDE28F9624AC086A00E8D841 /* MovieListDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9524AC086A00E8D841 /* MovieListDataSourceDelegate.swift */; };
 		FDE28F9824AC171900E8D841 /* MovieSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */; };
+		FDE28FA124AC345F00E8D841 /* HistoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9F24AC345F00E8D841 /* HistoryTagView.swift */; };
+		FDE28FA224AC345F00E8D841 /* HistoryTagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +117,8 @@
 		FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewModel.swift; sourceTree = "<group>"; };
 		FDE28F9524AC086A00E8D841 /* MovieListDataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDataSourceDelegate.swift; sourceTree = "<group>"; };
 		FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchBar.swift; sourceTree = "<group>"; };
+		FDE28F9F24AC345F00E8D841 /* HistoryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTagView.swift; sourceTree = "<group>"; };
+		FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTagView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,8 @@
 				FD70DDF224AA0B9000FCFAAF /* Router.swift */,
 				FDE28F9524AC086A00E8D841 /* MovieListDataSourceDelegate.swift */,
 				FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */,
+				FDE28F9F24AC345F00E8D841 /* HistoryTagView.swift */,
+				FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */,
 				FD70DDD924A948C200FCFAAF /* MovieListVC.swift */,
 				FD70DDF424AA0BEA00FCFAAF /* MovieDetailVC.swift */,
 				FD70DDDB24A94AF100FCFAAF /* MovieCell.swift */,
@@ -347,6 +353,7 @@
 				FD2EC49624A7A5B900895D94 /* Sources */,
 				FD2EC49724A7A5B900895D94 /* Frameworks */,
 				FD2EC49824A7A5B900895D94 /* Resources */,
+				2FF00E82D86092A27ECF2D59 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -384,6 +391,7 @@
 				FD2EC4BA24A7A5BD00895D94 /* Sources */,
 				FD2EC4BB24A7A5BD00895D94 /* Frameworks */,
 				FD2EC4BC24A7A5BD00895D94 /* Resources */,
+				577EF02934E0DE2F50C631BE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -445,6 +453,7 @@
 			files = (
 				FD2EC4AD24A7A5BD00895D94 /* LaunchScreen.storyboard in Resources */,
 				FD2EC4AA24A7A5BD00895D94 /* Assets.xcassets in Resources */,
+				FDE28FA224AC345F00E8D841 /* HistoryTagView.xib in Resources */,
 				FD70DDDE24A94AF100FCFAAF /* MovieCell.xib in Resources */,
 				FD2EC4A524A7A5B900895D94 /* Main.storyboard in Resources */,
 			);
@@ -467,6 +476,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2FF00E82D86092A27ECF2D59 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-The Movie DB/Pods-The Movie DB-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-The Movie DB/Pods-The Movie DB-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-The Movie DB/Pods-The Movie DB-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4B0A3643289A85D3516C3678 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -487,6 +513,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		577EF02934E0DE2F50C631BE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-The Movie DB-The Movie DBUITests/Pods-The Movie DB-The Movie DBUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-The Movie DB-The Movie DBUITests/Pods-The Movie DB-The Movie DBUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-The Movie DB-The Movie DBUITests/Pods-The Movie DB-The Movie DBUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E8F2820CAAE8FD3BB01FFE2A /* [CP] Check Pods Manifest.lock */ = {
@@ -553,6 +596,7 @@
 				FDE28F9024ABBB5000E8D841 /* ConfigurationService.swift in Sources */,
 				FD70DDF324AA0B9000FCFAAF /* Router.swift in Sources */,
 				FDE28F9824AC171900E8D841 /* MovieSearchBar.swift in Sources */,
+				FDE28FA124AC345F00E8D841 /* HistoryTagView.swift in Sources */,
 				FD2EC4D624A7A65900895D94 /* CoreDataManager.swift in Sources */,
 				FD70DDE724A9669A00FCFAAF /* MovieListViewModel.swift in Sources */,
 				FDE28F8E24ABB24900E8D841 /* MovieListService.swift in Sources */,

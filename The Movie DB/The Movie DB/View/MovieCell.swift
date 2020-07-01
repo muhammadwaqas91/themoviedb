@@ -31,15 +31,21 @@ class MovieCell: UICollectionViewCell {
             }
             
             viewModel.title.bind {[weak self] (text) in
-                self?.titleLabel.text = text
+                DispatchQueue.main.async {
+                    self?.titleLabel.text = text
+                }
             }
             
             viewModel.releaseDate.bind {[weak self] (text) in
-                self?.releaseDateLabel.text = text
+                DispatchQueue.main.async {
+                    self?.releaseDateLabel.text = text
+                }
             }
             
             viewModel.isFavorite.bind {[weak self] (isFavorite) in
-                self?.favButton.isSelected = isFavorite
+                DispatchQueue.main.async {
+                    self?.favButton.isSelected = isFavorite
+                }
             }
         }
     }

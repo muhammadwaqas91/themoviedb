@@ -50,23 +50,34 @@ class MovieDetailVC: BaseVC {
         }
         
         viewModel.title.bind {[weak self] (text) in
-            self?.titleLabel.text = text
+            DispatchQueue.main.async {
+                self?.titleLabel.text = text
+            }
         }
         
         viewModel.releaseDate.bind {[weak self] (text) in
-            self?.releaseDateLabel.text = text
+            DispatchQueue.main.async {
+                self?.releaseDateLabel.text = text
+            }
         }
         
         viewModel.genreTitle.bind {[weak self] (text) in
-            self?.genreLabel.text = text
+            DispatchQueue.main.async {
+                self?.genreLabel.text = text
+            }
+            
         }
         
         viewModel.duration.bind {[weak self] (text) in
-            self?.durationLabel.text = text
+            DispatchQueue.main.async {
+                self?.durationLabel.text = text
+            }
         }
         
         viewModel.overviewHeading.bind {[weak self] (text) in
-            self?.overviewHeadingLabel.text = text
+            DispatchQueue.main.async {
+                self?.overviewHeadingLabel.text = text
+            }
         }
         
         viewModel.overview.bind {[weak self] (text) in
@@ -74,7 +85,9 @@ class MovieDetailVC: BaseVC {
         }
         
         viewModel.isFavorite.bind {[weak self] (isFavorite) in
-            self?.favButton.isSelected = isFavorite
+            DispatchQueue.main.async {
+                self?.favButton.isSelected = isFavorite
+            }
         }
         
         viewModel.fetchMovieDetail()

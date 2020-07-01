@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Medium.otf">
+            <string>Poppins-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HistoryTagView" id="U6b-Vx-4bR" customClass="HistoryTagView" customModule="The_Movie_DB" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="138"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZxG-3N-lgZ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="138"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7c-7E-k9i" customClass="TagListView" customModule="TagListView">
+                            <rect key="frame" x="8" y="28" width="304" height="102"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="selectedTextColor">
+                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
+                                    <color key="value" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="tagSelectedBackgroundColor">
+                                    <color key="value" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="paddingY">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="paddingX">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="marginY">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="marginX">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="17"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZ2-M7-OgJ">
+                            <rect key="frame" x="8" y="0.0" width="304" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="c11-42-D83"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="YZ2-M7-OgJ" firstAttribute="top" secondItem="ZxG-3N-lgZ" secondAttribute="top" id="ENs-U2-trz"/>
+                        <constraint firstAttribute="trailing" secondItem="D7c-7E-k9i" secondAttribute="trailing" constant="8" id="JLt-hx-BNS"/>
+                        <constraint firstItem="YZ2-M7-OgJ" firstAttribute="leading" secondItem="ZxG-3N-lgZ" secondAttribute="leading" constant="8" id="Nqe-c8-uyl"/>
+                        <constraint firstAttribute="trailing" secondItem="YZ2-M7-OgJ" secondAttribute="trailing" constant="8" id="O0f-0w-k9S"/>
+                        <constraint firstItem="D7c-7E-k9i" firstAttribute="top" secondItem="YZ2-M7-OgJ" secondAttribute="bottom" constant="8" id="U68-WT-3b3"/>
+                        <constraint firstAttribute="bottom" secondItem="D7c-7E-k9i" secondAttribute="bottom" constant="8" id="p7Q-Q3-bFl"/>
+                        <constraint firstItem="D7c-7E-k9i" firstAttribute="leading" secondItem="ZxG-3N-lgZ" secondAttribute="leading" constant="8" id="uM7-Xe-Qav"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ZxG-3N-lgZ" secondAttribute="trailing" id="6p7-4P-60M"/>
+                <constraint firstAttribute="bottom" secondItem="ZxG-3N-lgZ" secondAttribute="bottom" id="HUS-V6-spt"/>
+                <constraint firstItem="ZxG-3N-lgZ" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="czD-IB-y3U"/>
+                <constraint firstItem="ZxG-3N-lgZ" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="pKT-hc-BnS"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <connections>
+                <outlet property="tagListView" destination="D7c-7E-k9i" id="5F8-ad-gEz"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="161.38392857142856"/>
+        </collectionReusableView>
+    </objects>
+</document>
