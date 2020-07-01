@@ -29,11 +29,9 @@ class MovieListViewModel: MovieListProtocol {
     var onErrorHandler: ((String?) -> Void)? = nil
     
     weak var popularService: MovieListServiceProtocol?
-    weak var searchService: SearchServiceProtocol?
     
-    init(_ popularService: MovieListServiceProtocol, _ searchService: SearchServiceProtocol) {
+    init(_ popularService: MovieListServiceProtocol) {
         self.popularService = popularService
-        self.searchService = searchService
     }
     
     func fetchMovies(after: Int) {

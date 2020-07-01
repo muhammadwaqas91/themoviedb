@@ -24,7 +24,7 @@
 		FD2EC4E224A7A7B800895D94 /* The_Movie_DB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD2EC4DE24A7A7B800895D94 /* The_Movie_DB.xcdatamodeld */; };
 		FD70DDCA24A7BE6100FCFAAF /* Constant Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD70DDC924A7BE6100FCFAAF /* Constant Keys.swift */; };
 		FD70DDD424A7E5A700FCFAAF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD70DDD324A7E5A700FCFAAF /* Extensions.swift */; };
-		FD70DDDA24A948C200FCFAAF /* PopularMoviesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD70DDD924A948C200FCFAAF /* PopularMoviesVC.swift */; };
+		FD70DDDA24A948C200FCFAAF /* MovieListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD70DDD924A948C200FCFAAF /* MovieListVC.swift */; };
 		FD70DDDD24A94AF100FCFAAF /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD70DDDB24A94AF100FCFAAF /* MovieCell.swift */; };
 		FD70DDDE24A94AF100FCFAAF /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD70DDDC24A94AF100FCFAAF /* MovieCell.xib */; };
 		FD70DDE324A9549100FCFAAF /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD70DDE224A9549100FCFAAF /* Dynamic.swift */; };
@@ -44,6 +44,8 @@
 		FDE28F9024ABBB5000E8D841 /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */; };
 		FDE28F9224ABD73600E8D841 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9124ABD73600E8D841 /* SearchService.swift */; };
 		FDE28F9424ABE66300E8D841 /* SearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */; };
+		FDE28F9624AC086A00E8D841 /* MovieListDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9524AC086A00E8D841 /* MovieListDataSourceDelegate.swift */; };
+		FDE28F9824AC171900E8D841 /* MovieSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,7 +93,7 @@
 		FD2EC4DF24A7A7B800895D94 /* The_Movie_DB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = The_Movie_DB.xcdatamodel; sourceTree = "<group>"; };
 		FD70DDC924A7BE6100FCFAAF /* Constant Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant Keys.swift"; sourceTree = "<group>"; };
 		FD70DDD324A7E5A700FCFAAF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		FD70DDD924A948C200FCFAAF /* PopularMoviesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesVC.swift; sourceTree = "<group>"; };
+		FD70DDD924A948C200FCFAAF /* MovieListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListVC.swift; sourceTree = "<group>"; };
 		FD70DDDB24A94AF100FCFAAF /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		FD70DDDC24A94AF100FCFAAF /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
 		FD70DDE224A9549100FCFAAF /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
@@ -111,6 +113,8 @@
 		FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
 		FDE28F9124ABD73600E8D841 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewModel.swift; sourceTree = "<group>"; };
+		FDE28F9524AC086A00E8D841 /* MovieListDataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDataSourceDelegate.swift; sourceTree = "<group>"; };
+		FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,7 +258,9 @@
 			children = (
 				FD2EC4A324A7A5B900895D94 /* Main.storyboard */,
 				FD70DDF224AA0B9000FCFAAF /* Router.swift */,
-				FD70DDD924A948C200FCFAAF /* PopularMoviesVC.swift */,
+				FDE28F9524AC086A00E8D841 /* MovieListDataSourceDelegate.swift */,
+				FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */,
+				FD70DDD924A948C200FCFAAF /* MovieListVC.swift */,
 				FD70DDF424AA0BEA00FCFAAF /* MovieDetailVC.swift */,
 				FD70DDDB24A94AF100FCFAAF /* MovieCell.swift */,
 				FD70DDDC24A94AF100FCFAAF /* MovieCell.xib */,
@@ -542,13 +548,15 @@
 				FDE28F7F24AB848700E8D841 /* RequestFactory.swift in Sources */,
 				FDE28F8124AB852700E8D841 /* ResponseHandler.swift in Sources */,
 				FD2EC4E024A7A7B800895D94 /* AppDelegate.swift in Sources */,
+				FDE28F9624AC086A00E8D841 /* MovieListDataSourceDelegate.swift in Sources */,
 				FD70DDE924A9706F00FCFAAF /* MovieList.swift in Sources */,
 				FDE28F9024ABBB5000E8D841 /* ConfigurationService.swift in Sources */,
 				FD70DDF324AA0B9000FCFAAF /* Router.swift in Sources */,
+				FDE28F9824AC171900E8D841 /* MovieSearchBar.swift in Sources */,
 				FD2EC4D624A7A65900895D94 /* CoreDataManager.swift in Sources */,
 				FD70DDE724A9669A00FCFAAF /* MovieListViewModel.swift in Sources */,
 				FDE28F8E24ABB24900E8D841 /* MovieListService.swift in Sources */,
-				FD70DDDA24A948C200FCFAAF /* PopularMoviesVC.swift in Sources */,
+				FD70DDDA24A948C200FCFAAF /* MovieListVC.swift in Sources */,
 				FD70DDCA24A7BE6100FCFAAF /* Constant Keys.swift in Sources */,
 				FDE28F7D24AB830400E8D841 /* MovieService.swift in Sources */,
 				FDE28F8924AB861C00E8D841 /* JSONDecoderHelper.swift in Sources */,
