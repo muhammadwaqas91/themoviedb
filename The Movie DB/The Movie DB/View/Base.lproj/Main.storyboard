@@ -51,19 +51,19 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gt2-8a-pAe">
-                                                <rect key="frame" x="153" y="247" width="37.5" height="18"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <rect key="frame" x="153" y="247" width="42" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opr-XD-Ap3">
-                                                <rect key="frame" x="210" y="247" width="37.5" height="18"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opr-XD-Ap3">
+                                                <rect key="frame" x="203" y="247" width="203" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAS-I0-wX4">
-                                                <rect key="frame" x="152" y="273" width="37.5" height="18"/>
+                                                <rect key="frame" x="152" y="275.5" width="37.5" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -103,9 +103,8 @@
                                             <constraint firstItem="6hq-Rw-Uei" firstAttribute="width" secondItem="VZP-im-jPo" secondAttribute="width" multiplier="0.3" id="1PF-Vy-q25"/>
                                             <constraint firstItem="gt2-8a-pAe" firstAttribute="top" secondItem="XdU-x1-qOu" secondAttribute="bottom" constant="8" id="1sh-Pu-KgW"/>
                                             <constraint firstAttribute="trailing" secondItem="o8r-Ax-VPO" secondAttribute="trailing" constant="20" id="2f4-wW-4PK"/>
-                                            <constraint firstAttribute="trailing" secondItem="opr-XD-Ap3" secondAttribute="trailing" constant="166.5" id="5NV-45-7fg"/>
+                                            <constraint firstAttribute="trailing" secondItem="opr-XD-Ap3" secondAttribute="trailing" constant="8" id="5NV-45-7fg"/>
                                             <constraint firstItem="cAS-I0-wX4" firstAttribute="leading" secondItem="gt2-8a-pAe" secondAttribute="leading" constant="-1" id="9mN-NE-ck2"/>
-                                            <constraint firstItem="opr-XD-Ap3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gt2-8a-pAe" secondAttribute="trailing" constant="8" symbolic="YES" id="AC3-Ug-oc7"/>
                                             <constraint firstAttribute="bottom" secondItem="zh0-Fy-GzG" secondAttribute="bottom" constant="10" id="BIQ-EP-Soc"/>
                                             <constraint firstItem="opr-XD-Ap3" firstAttribute="top" secondItem="gt2-8a-pAe" secondAttribute="top" id="Fya-wk-P35"/>
                                             <constraint firstItem="o8r-Ax-VPO" firstAttribute="top" secondItem="6hq-Rw-Uei" secondAttribute="bottom" constant="8" id="Fyw-hi-Vr2"/>
@@ -119,6 +118,7 @@
                                             <constraint firstItem="opr-XD-Ap3" firstAttribute="bottom" secondItem="gt2-8a-pAe" secondAttribute="bottom" id="Wu1-SF-VpF"/>
                                             <constraint firstItem="cAS-I0-wX4" firstAttribute="top" secondItem="gt2-8a-pAe" secondAttribute="bottom" constant="8" id="XJg-Jd-zjF"/>
                                             <constraint firstItem="5Fq-1B-DHa" firstAttribute="width" secondItem="5Fq-1B-DHa" secondAttribute="height" multiplier="1:1" id="ZJ1-oJ-af1"/>
+                                            <constraint firstItem="opr-XD-Ap3" firstAttribute="leading" secondItem="gt2-8a-pAe" secondAttribute="trailing" constant="8" id="avL-KS-RBr"/>
                                             <constraint firstItem="6hq-Rw-Uei" firstAttribute="leading" secondItem="6QB-cb-cvF" secondAttribute="leading" constant="20" id="bHQ-u8-82V"/>
                                             <constraint firstAttribute="trailing" secondItem="XdU-x1-qOu" secondAttribute="trailing" constant="20" id="dTr-Tt-Lsf"/>
                                             <constraint firstItem="6QB-cb-cvF" firstAttribute="leading" secondItem="VZP-im-jPo" secondAttribute="leading" id="dis-9U-G7d"/>

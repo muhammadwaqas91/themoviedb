@@ -81,7 +81,7 @@ extension MovieViewModelProtocol {
     }
 }
  
-class MovieViewModel: NSObject, MovieViewModelProtocol, MovieServiceProtocol {
+class MovieViewModel: NSObject, MovieViewModelProtocol {
     
     var posterPath: Dynamic<String?>
     var title: Dynamic<String?>
@@ -113,7 +113,12 @@ class MovieViewModel: NSObject, MovieViewModelProtocol, MovieServiceProtocol {
         
         for genre in movie.genres ?? [] {
             if let name = genre.name {
-                genreString = genreString + " " + name
+                if genreString.count > 0 {
+                    genreString = genreString + ", " + name
+                }
+                else {
+                    genreString = name
+                }
             }
         }
         
@@ -134,9 +139,6 @@ class MovieViewModel: NSObject, MovieViewModelProtocol, MovieServiceProtocol {
         })
     }
     
-    func getMovieDetail(movie_id: Int, params: [String : Any], success: @escaping (Movie) -> (), failure: ((String?) -> Void)?) {
-//        service.fetchMovieDetail
-    }
     
     func updateValues(movie: Movie) {
         posterPath.value = movie.posterPath
@@ -147,15 +149,9 @@ class MovieViewModel: NSObject, MovieViewModelProtocol, MovieServiceProtocol {
         
         backdropPath.value = movie.backdropPath
         
-        var genreString: String = ""
         
-        for genre in movie.genres ?? [] {
-            if let name = genre.name {
-                genreString += name
-            }
-        }
         
-        genreTitle.value = genreString
+        genreTitle.value = genreString()
         duration.value = MovieViewModel.getDuration(movie.runtime)
         overviewHeading.value = movie.tagline
         overview.value = movie.overview
@@ -164,5 +160,21 @@ class MovieViewModel: NSObject, MovieViewModelProtocol, MovieServiceProtocol {
     
     func toggleFavorite() {
         isFavorite.value = movie.toggleFavorite(isFavorite: isFavorite.value)
+    }
+    
+    func genreString() -> String {
+        var genreString: String = ""
+        
+        for genre in movie.genres ?? [] {
+            if let name = genre.name {
+                if genreString.count > 0 {
+                    genreString = genreString + ", " + name
+                }
+                else {
+                    genreString = name
+                }
+            }
+        }
+        return genreString
     }
 }

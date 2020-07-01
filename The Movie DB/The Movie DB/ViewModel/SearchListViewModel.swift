@@ -54,9 +54,7 @@ class SearchListViewModel: MovieListProtocol, SearchAssistantProtocol {
     
     // search from start with query change
     func fetchMovies(query: String) {
-        if !self.query.isEmpty {
-            resetValue()
-        }
+        resetValue()
         self.query = query
         fetchMovies(after: 0)
     }

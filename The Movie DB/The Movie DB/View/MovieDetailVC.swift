@@ -81,7 +81,9 @@ class MovieDetailVC: BaseVC {
         }
         
         viewModel.overview.bind {[weak self] (text) in
-            self?.overviewTextView.text = text
+            DispatchQueue.main.async {
+                self?.overviewTextView.text = text
+            }
         }
         
         viewModel.isFavorite.bind {[weak self] (isFavorite) in

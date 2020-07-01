@@ -38,13 +38,21 @@ class MovieListViewModel: MovieListProtocol {
         if (after == allMovies.value.count - 1) || allMovies.value.count == 0 && page < totalPages  {
             let next = page + 1
             let params: [String: Any] = ["page": next]
-            popularService?.fetchPopularMovies(params: params, success: {[weak self] (movieList) in
-                self?.updateValues(movieList: movieList)
-                }, failure: {[weak self] (message) in
-                    if let onErrorHandler = self?.onErrorHandler {
-                        onErrorHandler(message)
-                    }
-            })
+            if ConfigurationService.shared.configuration != nil {
+                popularService?.fetchPopularMovies(params: params, success: {[weak self] (movieList) in
+                    self?.updateValues(movieList: movieList)
+                    }, failure: {[weak self] (message) in
+                        if let onErrorHandler = self?.onErrorHandler {
+                            onErrorHandler(message)
+                        }
+                })
+            }
+            else {
+                ConfigurationService.shared.getConfigurations(success: {[weak self] (configuration) in
+                    ConfigurationService.shared.configuration = configuration
+                    self?.fetchMovies(after: after)
+                })
+            }
         }
     }
     

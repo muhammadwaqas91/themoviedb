@@ -48,6 +48,8 @@
 		FDE28F9824AC171900E8D841 /* MovieSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */; };
 		FDE28FA124AC345F00E8D841 /* HistoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9F24AC345F00E8D841 /* HistoryTagView.swift */; };
 		FDE28FA224AC345F00E8D841 /* HistoryTagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */; };
+		FDE28FA424AC5AC800E8D841 /* MovieListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28FA324AC5AC800E8D841 /* MovieListViewModelTest.swift */; };
+		FDE28FA624AC771B00E8D841 /* MovieViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28FA524AC771B00E8D841 /* MovieViewModelTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchBar.swift; sourceTree = "<group>"; };
 		FDE28F9F24AC345F00E8D841 /* HistoryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTagView.swift; sourceTree = "<group>"; };
 		FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTagView.xib; sourceTree = "<group>"; };
+		FDE28FA324AC5AC800E8D841 /* MovieListViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModelTest.swift; sourceTree = "<group>"; };
+		FDE28FA524AC771B00E8D841 /* MovieViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModelTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +230,8 @@
 			isa = PBXGroup;
 			children = (
 				FD2EC4B724A7A5BD00895D94 /* The_Movie_DBTests.swift */,
+				FDE28FA324AC5AC800E8D841 /* MovieListViewModelTest.swift */,
+				FDE28FA524AC771B00E8D841 /* MovieViewModelTest.swift */,
 				FD2EC4B924A7A5BD00895D94 /* Info.plist */,
 			);
 			path = "The Movie DBTests";
@@ -621,6 +627,8 @@
 			files = (
 				FD2EC4D724A7A65900895D94 /* CoreDataManager.swift in Sources */,
 				FD2EC4B824A7A5BD00895D94 /* The_Movie_DBTests.swift in Sources */,
+				FDE28FA424AC5AC800E8D841 /* MovieListViewModelTest.swift in Sources */,
+				FDE28FA624AC771B00E8D841 /* MovieViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
