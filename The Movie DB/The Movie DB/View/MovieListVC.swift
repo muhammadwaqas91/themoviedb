@@ -52,17 +52,15 @@ class MovieListVC: BaseVC {
         self.title = "Popular Movies"
         
         collectionView.register(UINib(nibName: "MovieCell", bundle: .main), forCellWithReuseIdentifier: "MovieCell")
-        
         collectionView.register(UINib(nibName: "HistoryTagView", bundle: .main), forSupplementaryViewOfKind: "UICollectionElementKindSectionHeader", withReuseIdentifier: "HistoryTagView")
-                                
         
         viewModelDataSourceDel = MovieListDataSourceDelegate(viewModel)
         searchViewModelDataSourceDel = MovieListDataSourceDelegate(searchViewModel)
         
-        collectionView.keyboardDismissMode = .onDrag
-        
         collectionView.dataSource = viewModelDataSourceDel
         collectionView.delegate = viewModelDataSourceDel
+        
+        collectionView.keyboardDismissMode = .onDrag
         
         viewModelDataSourceDel?.delegate = self
         searchViewModelDataSourceDel?.delegate = self
@@ -116,17 +114,15 @@ class MovieListVC: BaseVC {
 
 extension MovieListVC: MovieSearchBarDelegate {
     
-    
     func showHistoryTags(_ showTags: Bool, _ continueSearch: Bool) {
         
         viewModelDataSourceDel?.showTags = showTags
         searchViewModelDataSourceDel?.showTags = showTags
         
-        if continueSearch {
-            title = "Search Results"
-        }
-        else {
+        if !continueSearch{
             title = "Popular Movies"
+            
+            // because we need to show/hide tags
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -134,8 +130,10 @@ extension MovieListVC: MovieSearchBarDelegate {
     }
     
     func searchBarTextDidChange(_ text: String, _ hasText: Bool) {
+        
         viewModelDataSourceDel?.showTags = false
         searchViewModelDataSourceDel?.showTags = false
+        
         if hasText {
             title = "Search Results"
             collectionView.delegate = searchViewModelDataSourceDel
@@ -143,8 +141,6 @@ extension MovieListVC: MovieSearchBarDelegate {
             searchViewModel.fetchMovies(query: searchBar.text ?? "")
         }
         else {
-//            viewModelDataSourceDel?.showTags = true
-//            searchViewModelDataSourceDel?.showTags = true
             title = "Popular Movies"
             collectionView.dataSource = viewModelDataSourceDel
             collectionView.delegate = viewModelDataSourceDel

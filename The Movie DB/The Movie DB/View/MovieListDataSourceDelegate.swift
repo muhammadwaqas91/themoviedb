@@ -55,8 +55,9 @@ extension MovieListDataSourceDelegate: UICollectionViewDataSource {
                 tagView.tagBackgroundColor = .lightGray
                 tagView.textFont = UIFont.systemFont(ofSize: 13)
             }
-            historyTagView.tagListView.reloadInputViews()
             historyTagView.delegate = self
+            
+            historyTagView.tagListView.reloadInputViews()
             
             reusableview = historyTagView
         }
@@ -69,7 +70,6 @@ extension MovieListDataSourceDelegate: UICollectionViewDataSource {
         
         return reusableview ?? UICollectionReusableView(frame: .zero)
     }
-    
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
