@@ -41,11 +41,21 @@ class MovieDetailVC: BaseVC {
             if let path = viewModel.getFullBackdropPath() {
                 self?.backdropImageView.downloadImage(urlString: path)
             }
+            else {
+                DispatchQueue.main.async {
+                    self?.backdropImageView.image = UIImage(named: "No-Image")
+                }
+            }
         }
         
         viewModel.posterPath.bind {[weak self] (path) in
             if let path = viewModel.getFullPosterPath() {
                 self?.posterImageView.downloadImage(urlString: path)
+            }
+            else {
+                DispatchQueue.main.async {
+                    self?.posterImageView.image = UIImage(named: "No-Image")
+                }
             }
         }
         

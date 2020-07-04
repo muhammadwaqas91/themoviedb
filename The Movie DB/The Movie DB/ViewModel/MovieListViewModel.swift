@@ -18,7 +18,6 @@ protocol MovieListProtocol: ErrorHandlerProtocol {
     var allMovies: Dynamic<[Movie]>  { get set }
     
     func fetchMovies(after: Int)
-    func updateValues(movieList: MovieList)
 }
 
 class MovieListViewModel: MovieListProtocol {
@@ -57,7 +56,7 @@ class MovieListViewModel: MovieListProtocol {
     }
     
     
-    func updateValues(movieList: MovieList) {
+    private func updateValues(movieList: MovieList) {
         page = movieList.page
         totalPages = movieList.totalPages
         let all = allMovies.value + movieList.results

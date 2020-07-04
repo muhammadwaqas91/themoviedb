@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol SearchAssistantProtocol {
-    func resetValue()
-}
-
-class SearchListViewModel: MovieListProtocol, SearchAssistantProtocol {
+class SearchListViewModel: MovieListProtocol {
     var page: Int = 0
     var totalPages: Int = 1
     var allMovies: Dynamic<[Movie]> = Dynamic([])
     
     var onErrorHandler: ((String?) -> Void)? = nil
-    var query: String = ""
+    var query: String = "" {
+        didSet {
+            fetchFreshMovies()
+        }
+    }
     
     weak var searchService: SearchServiceProtocol?
     
@@ -53,21 +53,20 @@ class SearchListViewModel: MovieListProtocol, SearchAssistantProtocol {
     }
     
     // search from start with query change
-    func fetchMovies(query: String) {
+    func fetchFreshMovies() {
         resetValue()
-        self.query = query
         fetchMovies(after: 0)
     }
     
     
-    func updateValues(movieList: MovieList) {
+    private func updateValues(movieList: MovieList) {
         page = movieList.page
         totalPages = movieList.totalPages
         let all = allMovies.value + movieList.results
         allMovies.value = all
     }
     
-    func resetValue() {
+    private func resetValue() {
         page = 0
         totalPages = 1
         allMovies.value = []

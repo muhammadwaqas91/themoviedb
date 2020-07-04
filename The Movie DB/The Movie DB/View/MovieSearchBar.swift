@@ -20,13 +20,6 @@ class MovieSearchBar: UISearchBar {
     
     weak var movieSearchBarDelegate: MovieSearchBarDelegate?
     
-    override var text: String? {
-        didSet {
-            print(oldValue)
-            print(text)
-        }
-    }
-    
     var hasText: Bool {
         if let text = text, !text.isEmpty {
             return true

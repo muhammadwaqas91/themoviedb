@@ -28,6 +28,11 @@ class MovieCell: UICollectionViewCell {
                 if let path = viewModel.getFullPosterPath() {
                     self?.posterImageView.downloadImage(urlString: path)
                 }
+                else {
+                    DispatchQueue.main.async {
+                        self?.posterImageView.image = UIImage(named: "No-Image")
+                    }
+                }
             }
             
             viewModel.title.bind {[weak self] (text) in
