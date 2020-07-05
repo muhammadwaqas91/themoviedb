@@ -143,6 +143,10 @@ extension UIImageView {
         
         let imageCache = NSCache<NSString, UIImage>()
 
+        DispatchQueue.main.async {
+            self.image = nil
+        }
+        
         if let image = imageCache.object(forKey: urlString as NSString) {
             DispatchQueue.main.async {
                 self.image = image

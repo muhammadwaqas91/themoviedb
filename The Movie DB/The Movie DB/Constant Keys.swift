@@ -17,7 +17,19 @@ struct Constants {
     static let movie = "/movie"
     
     static let configuration = "/configuration"
-    
 }
 
+// MARK:- CoreData Configuration
+
+// entity names
+struct Entity {
+    static let Favorite = "Favorite"
+    static let History = "History"
+}
+
+// entities attributes
+struct Attributes  {
+    static let id = "id"
+    static let tag = "tag"
+}
 

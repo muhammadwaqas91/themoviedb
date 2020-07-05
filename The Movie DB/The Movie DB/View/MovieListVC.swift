@@ -47,7 +47,8 @@ class MovieListVC: BaseVC {
 
 extension MovieListVC: MovieSearchBarDelegate {
     
-    func showHistoryTags(_ continueSearch: Bool) {
+    func showHistoryTags(_ showTags: Bool, _ continueSearch: Bool) {
+        collectionView.showTags = showTags
         collectionView.isSearching = continueSearch
     }
     

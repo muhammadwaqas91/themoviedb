@@ -5,9 +5,10 @@
     </entity>
     <entity name="History" representedClassName="History" syncable="YES" codeGenerationType="class">
         <attribute name="tag" optional="YES" attributeType="String"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
         <element name="Favorite" positionX="-63" positionY="-18" width="128" height="58"/>
-        <element name="History" positionX="-54" positionY="-9" width="128" height="58"/>
+        <element name="History" positionX="-54" positionY="-9" width="128" height="73"/>
     </elements>
 </model>

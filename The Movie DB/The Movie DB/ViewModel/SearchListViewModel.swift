@@ -36,9 +36,17 @@ class SearchListViewModel: MovieListProtocol {
             searchService?.search(params: params, success: {[weak self] (movieList) in
                 self?.updateValues(movieList: movieList)
                 
-                // if search was success and movieList.count > 0
-                // persist this keyword
-                
+                // search is success
+                // now if movieList.results.count > 0
+                if let query = self?.query, movieList.results.count > 0 {
+                    // if this keyword doesn't already exists
+                    
+                    let predicate = NSPredicate(format: "tag == %@", query)
+                    if !CoreDataManager.exists(entityName: Entity.History, predicate: predicate) {
+                        // persist this keyword
+                        let _ = CoreDataManager.save(object: ["tag": query, "timeStamp": Date()], entityName: Entity.History)
+                    }
+                }
                 
                 
                 if let onErrorHandler = self?.onErrorHandler, movieList.totalResults == 0 {

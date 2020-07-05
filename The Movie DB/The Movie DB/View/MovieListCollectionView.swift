@@ -20,7 +20,6 @@ class MovieListCollectionView: UICollectionView {
     weak var source: UIViewController?
     weak var protocolDelegate: MovieListCollectionViewProtocol?
     
-    
     private var popularViewModel = MovieListViewModel(MovieListService.shared)
     private var searchViewModel = SearchListViewModel(SearchService.shared)
     
@@ -37,8 +36,10 @@ class MovieListCollectionView: UICollectionView {
         didSet {
             if query.isEmpty {
                 isSearching = false
+                showTags = true
             }
             else {
+                showTags = false
                 isSearching = true
                 searchViewModel.query = query
             }
@@ -48,13 +49,15 @@ class MovieListCollectionView: UICollectionView {
     var isSearching: Bool = false {
         didSet {
             if isSearching {
-                
             }
             else {
                 reloadData()
             }
         }
     }
+    
+    var showTags: Bool = false
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -119,15 +122,18 @@ extension MovieListCollectionView: UICollectionViewDataSource {
                 return UICollectionReusableView(frame: .zero)
             }
             
-            let historyTags: [String] = ["Ali", "Abdullah", "Romeo", "Shaolin", "Jaki", "USA", "Day", "Ali", "Abdullah", "Romeo", "Shaolin", "Jaki", "USA", "Day"]
-            
             historyTagView.tagListView.removeAllTags()
             
-            for i in historyTags {
-                let tagView = historyTagView.tagListView.addTag(i)
-                tagView.tagBackgroundColor = .lightGray
-                tagView.textFont = UIFont.systemFont(ofSize: 13)
+            if let historyList = CoreDataManager.fetchList(entityName: Entity.History, predicate: nil, fetchLimit: 10, sortBy: [("timeStamp", ascending: false)]) as? [History] {
+                for i in historyList {
+                    if let tag = i.tag {
+                        let tagView = historyTagView.tagListView.addTag(tag)
+                        tagView.tagBackgroundColor = .lightGray
+                        tagView.textFont = UIFont.systemFont(ofSize: 13)
+                    }
+                }
             }
+            
             historyTagView.delegate = self
             
             historyTagView.tagListView.reloadInputViews()
@@ -184,19 +190,25 @@ extension MovieListCollectionView: UICollectionViewDelegateFlowLayout {
         // Get the view for the first header
         let indexPath = IndexPath(row: 0, section: section)
         let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
-        if isSearching {
-            return .zero
+        if showTags {
+            // Use this view to calculate the optimal size based on the collection view's width
+            return headerView.systemLayoutSizeFitting(CGSize(width: frame.width, height: UIView.layoutFittingExpandedSize.height),
+                                                      withHorizontalFittingPriority: .required, // Width is fixed
+                verticalFittingPriority: .fittingSizeLevel) // Height can be as large as needed
         }
         
-        // Use this view to calculate the optimal size based on the collection view's width
-        return headerView.systemLayoutSizeFitting(CGSize(width: frame.width, height: UIView.layoutFittingExpandedSize.height),
-                                                  withHorizontalFittingPriority: .required, // Width is fixed
-            verticalFittingPriority: .fittingSizeLevel) // Height can be as large as needed
+        return .zero
     }
 }
 
 extension MovieListCollectionView: HistoryTagViewDelegate {
     func tagPressed(_ tag: String) {
         protocolDelegate?.tagPressed(tag)
+    }
+    
+    func tagRemove(_ tag: String) {
+        let predicate = NSPredicate(format: "tag == %@", tag)
+        CoreDataManager.deleteAll(entityName: Entity.History, predicate: predicate)
+        reloadData()
     }
 }

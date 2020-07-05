@@ -11,7 +11,7 @@ import UIKit
 
 protocol MovieSearchBarDelegate: NSObjectProtocol {
      // called when text changes (including clear)
-    func showHistoryTags(_ continueSearch: Bool)
+    func showHistoryTags(_ showTags: Bool, _ continueSearch: Bool)
     func searchBarTextDidChange(_ text: String, _ hasText: Bool)
     
 }
@@ -41,13 +41,13 @@ extension MovieSearchBar: UISearchBarDelegate {
     
     // called when text starts editing
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        movieSearchBarDelegate?.showHistoryTags(continueSearch)
+        movieSearchBarDelegate?.showHistoryTags(!hasText, continueSearch)
     }
     
     // called when text ends editing
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("searchBarTextDidEndEditing")
-        movieSearchBarDelegate?.showHistoryTags(continueSearch)
+        movieSearchBarDelegate?.showHistoryTags(false, continueSearch)
     }
 
      // called when text changes (including clear)

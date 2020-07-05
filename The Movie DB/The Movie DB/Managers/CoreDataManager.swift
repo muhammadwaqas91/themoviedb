@@ -9,51 +9,197 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+class CoreDataManager   {
     
-    static let shared = CoreDataManager()
+    static var shared = CoreDataManager()
     
-    // MARK: - Core Data stack
-    lazy var persistentContainer: NSPersistentCloudKitContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-         */
-        let container = NSPersistentCloudKitContainer(name: "The_Movie_DB")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
+    class func insert(object: [String: Any], entityName: String) -> NSManagedObject?    {
+        let details = CoreDataStack.details(entityName)
+        let entity = details.entity
+        let managedObject = details.managedObject
+        
+        return setValues(entity, object, managedObject)
+    }
     
-    // MARK: - Core Data Saving support
-    
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+    class func update(list objects: [[String: Any]], entityName: String, predicate: NSPredicate){
+               
+        let details = CoreDataStack.details(entityName)
+        let entity = details.entity
+
+        guard  let objectsToUpdate = fetchList(entityName: entityName, predicate: predicate) else {
+            return
+        }
+        
+        for managedObject in objectsToUpdate {
+            for object in objects {
+                let _ = setValues(entity, object, managedObject)
             }
         }
+    }
+    
+    class func update(object: [String: Any], entityName: String, id: Int64) -> NSManagedObject?  {
+        let predicate = NSPredicate(format: "id == %ld", id)
+        return self.update(object: object, entityName: entityName, predicate:predicate)
+    }
+    
+    class func update(object: [String: Any], entityName: String, predicate: NSPredicate) -> NSManagedObject? {
+        guard  let managedObject = fetchObject(entityName: entityName, predicate: predicate) else {
+            return self.insert(object: object, entityName: entityName)
+        }
+        
+        let details = CoreDataStack.details(entityName)
+        let entity = details.entity
+        
+        return setValues(entity, object, managedObject)
+    }
+    
+    class func delete(entityName: String, id: Int64) {
+        let predicate = NSPredicate(format: "id == %ld", id)
+        delete(entityName: entityName, predicate: predicate)
+    }
+    
+    class func delete(entityName: String, predicate: NSPredicate?) {
+        let coordinator = CoreDataStack.storeCoordinator
+        let context = CoreDataStack.context
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        fetchRequest.predicate = predicate
+        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            let result = try coordinator.execute(request, with: context)
+            print(result)
+            
+        } catch {
+            print("Failed to execute request: \(error)")
+        }
+    }
+    
+    class func deleteAll(entityName: String, predicate: NSPredicate? = nil)  {
+        let context = CoreDataStack.context
+        let objects = fetchList(entityName: entityName, predicate: predicate, sortBy: nil)
+        for object in objects!   {
+            context.delete(object)
+        }
+    }
+    
+    
+    // insert or update
+    class func save(object: [String: Any], entityName: String, id: Int64? = nil) -> NSManagedObject   {
+        var savedObject: NSManagedObject!
+        if id == nil    {
+            savedObject = CoreDataManager.insert(object: object, entityName: entityName)
+        }
+        else if CoreDataManager.exists(entityName: entityName, id: id!)    {
+            savedObject = CoreDataManager.update(object: object, entityName: entityName, id: id!)
+            
+        }
+        
+        return savedObject
+        
+    }
+    
+    class func save(list:  [[String: Any]], entityName: String)  {
+        let context = CoreDataStack.context
+        let entity = CoreDataStack.details(entityName).entity
+        
+        var managedObjects = [NSManagedObject]()
+        
+        for object in list  {
+            let managedObject = NSManagedObject(entity: entity, insertInto: context)
+            managedObjects.append(setValues(entity, object, managedObject))
+        }
+    }
+    
+    fileprivate static func setValues(_ entity: NSEntityDescription, _ object: [String : Any], _ managedObject: NSManagedObject) -> NSManagedObject {
+        let keys = Array(entity.attributesByName.keys)
+        
+        for (key, element) in object  {
+            if keys.contains(key)   {
+                managedObject.setValue(element, forKey: key)
+            }
+        }
+        
+        return managedObject
+    }
+    
+    
+    //MARK:- Existing Methods
+    
+    class func exists(entityName: String, id: Int64) -> Bool {
+        let predicate = NSPredicate(format: "id == %ld", id)
+        return countObjects(entityName: entityName, predicate: predicate) == 1
+    }
+    
+    class func exists(entityName: String, predicate: NSPredicate) -> Bool {
+        return countObjects(entityName: entityName, predicate: predicate) == 1
+    }
+    
+    class func countObjects(entityName: String, predicate: NSPredicate?) -> Int  {
+        let context = CoreDataStack.context
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        fetchRequest.predicate = predicate
+        var count = 0
+        do {
+            count = try context.count(for: fetchRequest)
+        } catch  {
+            print("Could not fetch: \(error)")
+        }
+        return count
+    }
+    
+    //MARK:- Fetching Methods
+    
+    class func fetchObject(entityName: String, id: Int64 ) -> NSManagedObject?  {
+        let context = CoreDataStack.context
+        let predicate = NSPredicate(format: "id == %ld", id)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        fetchRequest.predicate = predicate
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        }   catch   {
+            print("Could not fetch: \(error)")
+        }
+        return nil
+    }
+    
+    class func fetchObject(entityName: String, predicate: NSPredicate? = nil) -> NSManagedObject?  {
+        let context = CoreDataStack.context
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        fetchRequest.predicate = predicate
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        }   catch   {
+            print("Could not fetch: \(error)")
+        }
+        return nil
+    }
+    
+    class func fetchList(entityName: String, predicate: NSPredicate? = nil, fetchLimit: Int? = nil, sortBy: [(key: String, ascending: Bool)]? = nil) -> [NSManagedObject]?  {
+            let context = CoreDataStack.context
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+            fetchRequest.predicate = predicate
+            if let fetchLimits = fetchLimit {
+                fetchRequest.fetchLimit =  fetchLimits
+            }
+            
+            if let sortedBy = sortBy    {
+                var sortDescriptors = [NSSortDescriptor]()
+                for sortElement in sortedBy   {
+                    let sortDescriptor = NSSortDescriptor(key: sortElement.key, ascending: sortElement.ascending)
+                    sortDescriptors.append(sortDescriptor)
+                }
+                fetchRequest.sortDescriptors = sortDescriptors
+            }
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                return results
+            }   catch   {
+                print("Could not fetch: \(error)")
+            }
+            return nil
     }
 }
