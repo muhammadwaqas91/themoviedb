@@ -3,7 +3,7 @@
 //  The Movie DB
 //
 //  Created by Muhammad Waqas on 7/1/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import Foundation
@@ -40,12 +40,7 @@ class SearchListViewModel: MovieListProtocol {
                 // now if movieList.results.count > 0
                 if let query = self?.query, movieList.results.count > 0 {
                     // if this keyword doesn't already exists
-                    
-                    let predicate = NSPredicate(format: "tag == %@", query)
-                    if !CoreDataManager.exists(entityName: Entity.History, predicate: predicate) {
-                        // persist this keyword
-                        let _ = CoreDataManager.save(object: ["tag": query, "timeStamp": Date()], entityName: Entity.History)
-                    }
+                    History.addTag(query)
                 }
                 
                 

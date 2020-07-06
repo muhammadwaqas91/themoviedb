@@ -106,12 +106,7 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
         title = Dynamic(movie.title)
         releaseDate = Dynamic(MovieViewModel.getReleaseYear(movie.releaseDate))
         
-        if let _ = CoreDataManager.fetchObject(entityName: Entity.Favorite, id: Int64(movie.id)) {
-            isFavorite = Dynamic(true)
-        }
-        else {
-            isFavorite = Dynamic(false)
-        }
+        isFavorite = Dynamic(Favorite.isFavorite(Int64(movie.id)))
         
         backdropPath = Dynamic(movie.backdropPath)
         
@@ -132,6 +127,7 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
         duration = Dynamic(MovieViewModel.getDuration(movie.runtime))
         overviewHeading = Dynamic(movie.tagline)
         overview = Dynamic(movie.overview)
+        super.init()
     }
     
     func fetchMovieDetail() {
@@ -162,10 +158,10 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
     func toggleFavorite() {
         let value = movie.toggleFavorite(isFavorite: isFavorite.value)
         if value {
-            let _ = CoreDataManager.save(object: ["id": movie.id], entityName: Entity.Favorite)
+            Favorite.add(Int64(movie.id))
         }
         else {
-            CoreDataManager.delete(entityName: Entity.Favorite, id: Int64(movie.id))
+            Favorite.remove(Int64(movie.id))
         }
         isFavorite.value = value
     }

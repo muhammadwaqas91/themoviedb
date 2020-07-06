@@ -3,7 +3,7 @@
 //  The Movie DB
 //
 //  Created by Muhammad Waqas on 7/1/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import Foundation

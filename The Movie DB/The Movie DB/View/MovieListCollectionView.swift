@@ -3,7 +3,7 @@
 //  The Movie DB
 //
 //  Created by Muhammad Waqas on 7/1/20.
-//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
+//  Copyright © 2020 Muhammad Waqas. All rights reserved.
 //
 
 import Foundation
@@ -124,13 +124,11 @@ extension MovieListCollectionView: UICollectionViewDataSource {
             
             historyTagView.tagListView.removeAllTags()
             
-            if let historyList = CoreDataManager.fetchList(entityName: Entity.History, predicate: nil, fetchLimit: 10, sortBy: [("timeStamp", ascending: false)]) as? [History] {
-                for i in historyList {
-                    if let tag = i.tag {
-                        let tagView = historyTagView.tagListView.addTag(tag)
-                        tagView.tagBackgroundColor = .lightGray
-                        tagView.textFont = UIFont.systemFont(ofSize: 13)
-                    }
+            for i in History.tags() {
+                if let tag = i.tag {
+                    let tagView = historyTagView.tagListView.addTag(tag)
+                    tagView.tagBackgroundColor = .lightGray
+                    tagView.textFont = UIFont.systemFont(ofSize: 13)
                 }
             }
             
@@ -207,8 +205,7 @@ extension MovieListCollectionView: HistoryTagViewDelegate {
     }
     
     func tagRemove(_ tag: String) {
-        let predicate = NSPredicate(format: "tag == %@", tag)
-        CoreDataManager.deleteAll(entityName: Entity.History, predicate: predicate)
+        History.removeTag(tag)
         reloadData()
     }
 }
