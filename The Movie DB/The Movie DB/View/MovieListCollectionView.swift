@@ -77,7 +77,7 @@ class MovieListCollectionView: UICollectionView {
     private func setFlowLayoutSize() {
         collectionViewLayout.invalidateLayout()
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0)
         
         let height = frame.size.height
         let width = frame.size.width
@@ -89,10 +89,24 @@ class MovieListCollectionView: UICollectionView {
     }
     
     private func bindViewModels() {
-        
-        popularViewModel.allMovies.bind { [weak self] _ in
+        popularViewModel.newMovies.bind { [weak self] _ in
             DispatchQueue.main.async {
-                self?.reloadData()
+                
+                guard let newMovies = self?.popularViewModel.newMovies.value, let allMovies = self?.popularViewModel.allMovies.value, newMovies.count > 0 && allMovies.count > newMovies.count  else {
+                    UIView.animate(withDuration: 0) {[weak self] in
+                        self?.performBatchUpdates({
+                            self?.reloadSections(IndexSet(integer: 1))
+                        }, completion: nil)
+                    }
+                    
+                    return
+                }
+                
+                self?.performBatchUpdates({
+                    let indexes = allMovies.findIndexes(newMovies)
+                    let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 1)})
+                    self?.insertItems(at: indexPaths)
+                }, completion: nil)
             }
         }
         
@@ -100,9 +114,22 @@ class MovieListCollectionView: UICollectionView {
             self?.source?.showAlert(message: message)
         }
         
-        searchViewModel.allMovies.bind { [weak self] _ in
+        searchViewModel.newMovies.bind { [weak self] _ in
             DispatchQueue.main.async {
-                self?.reloadData()
+                guard let newMovies = self?.searchViewModel.newMovies.value, let allMovies = self?.searchViewModel.allMovies.value, newMovies.count > 0 && allMovies.count > newMovies.count  else {
+                    UIView.animate(withDuration: 0) {[weak self] in
+                        self?.performBatchUpdates({
+                            self?.reloadSections(IndexSet(integer: 1))
+                        }, completion: nil)
+                    }
+                    return
+                }
+                
+                self?.performBatchUpdates({
+                    let indexes = allMovies.findIndexes(newMovies)
+                    let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 1)})
+                    self?.insertItems(at: indexPaths)
+                }, completion: nil)
             }
         }
         searchViewModel.page = 1
@@ -116,40 +143,49 @@ extension MovieListCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         var reusableview: UICollectionReusableView? = nil
-        
-        if kind == UICollectionView.elementKindSectionHeader {
-            guard let historyTagView = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HistoryTagView", for: indexPath) as? HistoryTagView else {
-                return UICollectionReusableView(frame: .zero)
-            }
-            
-            historyTagView.tagListView.removeAllTags()
-            
-            for i in History.tags() {
-                if let tag = i.tag {
-                    let tagView = historyTagView.tagListView.addTag(tag)
-                    tagView.tagBackgroundColor = .lightGray
-                    tagView.textFont = UIFont.systemFont(ofSize: 13)
+        if indexPath.section == 0 {
+            if kind == UICollectionView.elementKindSectionHeader {
+                guard let historyTagView = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HistoryTagView", for: indexPath) as? HistoryTagView else {
+                    return UICollectionReusableView(frame: .zero)
                 }
+                
+                historyTagView.tagListView.removeAllTags()
+                
+                for i in History.tags() {
+                    if let tag = i.tag {
+                        let tagView = historyTagView.tagListView.addTag(tag)
+                        tagView.tagBackgroundColor = .lightGray
+                        tagView.textFont = UIFont.systemFont(ofSize: 13)
+                    }
+                }
+                
+                historyTagView.delegate = self
+                
+                historyTagView.tagListView.reloadInputViews()
+                
+                reusableview = historyTagView
             }
             
-            historyTagView.delegate = self
+            if kind == UICollectionView.elementKindSectionFooter {
+                let footerview = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterView", for: indexPath)
+                
+                reusableview = footerview
+            }
             
-            historyTagView.tagListView.reloadInputViews()
-            
-            reusableview = historyTagView
+            return reusableview ?? UICollectionReusableView(frame: .zero)
         }
         
-        if kind == UICollectionView.elementKindSectionFooter {
-            let footerview = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterView", for: indexPath)
-            
-            reusableview = footerview
-        }
-        
-        return reusableview ?? UICollectionReusableView(frame: .zero)
+        return UICollectionReusableView(frame: .zero)
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return 0
+        }
         return viewModel.allMovies.value.count
     }
     
@@ -206,6 +242,10 @@ extension MovieListCollectionView: HistoryTagViewDelegate {
     
     func tagRemove(_ tag: String) {
         History.removeTag(tag)
-        reloadData()
+        UIView.animate(withDuration: 0) {[weak self] in
+            self?.performBatchUpdates({
+                self?.reloadSections(IndexSet(integer: 0))
+            }, completion: nil)
+        }
     }
 }

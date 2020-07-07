@@ -16,7 +16,7 @@ protocol MovieListProtocol: ErrorHandlerProtocol {
     var page: Int { get set }
     var totalPages: Int { get set }
     var allMovies: Dynamic<[Movie]>  { get set }
-    
+    var newMovies: Dynamic<[Movie]>  { get set }
     func fetchMovies(after: Int)
 }
 
@@ -24,6 +24,7 @@ class MovieListViewModel: MovieListProtocol {
     var page: Int = 0
     var totalPages: Int = 1
     var allMovies: Dynamic<[Movie]> = Dynamic([])
+    var newMovies: Dynamic<[Movie]> = Dynamic([])
     
     var onErrorHandler: ((String?) -> Void)? = nil
     
@@ -61,5 +62,6 @@ class MovieListViewModel: MovieListProtocol {
         totalPages = movieList.totalPages
         let all = allMovies.value + movieList.results
         allMovies.value = all
+        newMovies.value = movieList.results
     }
 }

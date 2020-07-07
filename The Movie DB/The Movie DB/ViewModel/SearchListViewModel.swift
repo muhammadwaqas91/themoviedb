@@ -12,6 +12,7 @@ class SearchListViewModel: MovieListProtocol {
     var page: Int = 0
     var totalPages: Int = 1
     var allMovies: Dynamic<[Movie]> = Dynamic([])
+    var newMovies: Dynamic<[Movie]> = Dynamic([])
     
     var onErrorHandler: ((String?) -> Void)? = nil
     var query: String = "" {
@@ -67,6 +68,7 @@ class SearchListViewModel: MovieListProtocol {
         totalPages = movieList.totalPages
         let all = allMovies.value + movieList.results
         allMovies.value = all
+        newMovies.value = movieList.results
     }
     
     private func resetValue() {

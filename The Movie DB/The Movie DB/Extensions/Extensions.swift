@@ -217,3 +217,20 @@ extension Dictionary {
         lhs.merge(rhs) { (current, _) in current }
     }
 }
+
+extension Array where Element : Equatable {
+    func findIndexes(_ child: Array<Element>) -> [Int] {
+        var indexes: [Int] = []
+
+        _ = child.filter({item in
+            guard let index = firstIndex(of: item) else {
+                return false
+            }
+            indexes.append(index)
+            return true
+        })
+
+        return indexes
+    }
+
+}

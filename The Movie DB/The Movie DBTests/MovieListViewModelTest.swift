@@ -33,19 +33,16 @@ class MovieListViewModelTest: XCTestCase {
     
     
     var viewModel : MovieListViewModel!
-    var dataSource : MovieListDataSourceDelegate!
     fileprivate var mockService : MockService!
     
     override func setUp() {
         super.setUp()
         self.mockService = MockService()
         self.viewModel = MovieListViewModel(MovieListService.shared)
-        self.dataSource = MovieListDataSourceDelegate(self.viewModel)
     }
     
     override func tearDown() {
         self.viewModel = nil
-        self.dataSource = nil
         self.mockService = nil
         super.tearDown()
     }
@@ -67,7 +64,11 @@ class MovieListViewModelTest: XCTestCase {
             XCTAssert(false, "ViewModel should not be able to fetch without service")
         }
         
-        dataSource.viewModel.allMovies.bind { (movieList) in
+        viewModel.allMovies.bind { (movieList) in
+            expectation.fulfill()
+        }
+        
+        viewModel.newMovies.bind { (movieList) in
             expectation.fulfill()
         }
         
