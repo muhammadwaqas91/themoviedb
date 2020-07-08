@@ -20,7 +20,7 @@ protocol JSONDecoderProtocol {
     static func parse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: ((String?) -> Void)?)
 }
 
-final class JSONDecoderHelper: JSONDecoderProtocol {
+struct JSONDecoderHelper: JSONDecoderProtocol {
     
 }
 

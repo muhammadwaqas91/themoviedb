@@ -26,15 +26,13 @@ struct MovieListService : RequestServiceProtocol, ResponseHandlerProtocol, Movie
     static let shared = MovieListService()
     var task : URLSessionTask?
     
-    
-    
     mutating func fetchPopularMovies(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
         
         // cancel previous request if already in progress
-//        cancelPreviousTask()
+        //        cancelPreviousTask()
         
         let urlString = encodedString(endPoint: Constants.popular, params: params)
-       let headers = ["Content-Type" : "application/json; charset=utf-8"]
+        let headers = ["Content-Type" : "application/json; charset=utf-8"]
         task = MovieListService.sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: MovieListService.result(success: success, failure: failure))
     }
     
