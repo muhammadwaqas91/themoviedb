@@ -26,9 +26,12 @@ extension URLEncodingProtocol {
     }
 }
 
-class ResponseHandler: URLEncodingProtocol {
-    
-    func result<T: Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
+protocol ResponseHandlerProtocol: URLEncodingProtocol, JSONDecoderProtocol {
+    static func result<T: Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void)
+}
+
+extension ResponseHandlerProtocol {
+    static func result<T: Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
         return { data, response, error in
             DispatchQueue.global(qos: .background).async(execute: {
                 JSONDecoderHelper.parse(data: data, response: response, error: error, success: success, failure: failure)

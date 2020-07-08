@@ -11,7 +11,7 @@ import UIKit
 
 extension UIViewController {
     
-    class func topMostController() -> UIViewController? {
+    static func topMostController() -> UIViewController? {
         if let rootViewController = UIApplication.shared.windows.last?.rootViewController {
             var vc: UIViewController? = rootViewController
             while (vc?.presentedViewController != nil) {
@@ -24,7 +24,7 @@ extension UIViewController {
     
     func showAlert(withTitle title: String? = nil, message : String? , success: (() -> Void)? = nil,  failure:(() -> Void)? = nil)  {
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async {[weak self] in
             if title == nil && message == nil {
                 return
             }
@@ -42,14 +42,14 @@ extension UIViewController {
             alertController.addAction(OKAction)
             alertController.addAction(cancel)
             
-            self.present(alertController, animated: true, completion: nil)
+            self?.present(alertController, animated: true, completion: nil)
         }
         
     }
     
     /*
     
-    class func showAlertView(withTitle title: String? = nil, message: String?, alertType: AlertType = .none, rightBtnTitle: String? = nil, leftBtnTitle: String? = nil, rightHandler: (() -> Void)? = nil, leftHandler: (() -> Void)? = nil, hideOnTouch: Bool = false, autoHide: Bool = false, duration: Double = 2.0) {
+    static func showAlertView(withTitle title: String? = nil, message: String?, alertType: AlertType = .none, rightBtnTitle: String? = nil, leftBtnTitle: String? = nil, rightHandler: (() -> Void)? = nil, leftHandler: (() -> Void)? = nil, hideOnTouch: Bool = false, autoHide: Bool = false, duration: Double = 2.0) {
         
         let alertView = Bundle.main.loadNibNamed("AlertView", owner: self, options: nil)![0] as! AlertView
         
@@ -122,7 +122,7 @@ extension UIViewController {
             }
         }
      
-     @objc class func removeFromSuperView(_ view: UIView) {
+     @objc static func removeFromSuperView(_ view: UIView) {
          UIView.animate(withDuration: 0.5, delay: 0, options: .transitionCrossDissolve, animations: {
              view.alpha = 0
          }) { (completed) in
@@ -143,13 +143,13 @@ extension UIImageView {
         
         let imageCache = NSCache<NSString, UIImage>()
 
-        DispatchQueue.main.async {
-            self.image = nil
+        DispatchQueue.main.async {[weak self] in
+            self?.image = nil
         }
         
         if let image = imageCache.object(forKey: urlString as NSString) {
-            DispatchQueue.main.async {
-                self.image = image
+            DispatchQueue.main.async {[weak self] in
+                self?.image = image
             }
             if let success = success {
                 success(image)
@@ -164,7 +164,7 @@ extension UIImageView {
             let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
                 
                 // response received, now switch back to main queue
-                DispatchQueue.main.async {
+                DispatchQueue.main.async {[weak self] in
                     if let error = error {
                         if let failure = failure {
                             failure(error)
@@ -172,7 +172,7 @@ extension UIImageView {
                     }
                     else if let data = data, let image = UIImage(data: data) {
                         imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                        self.image = image
+                        self?.image = image
                         if let success = success {
                             success(image)
                         }

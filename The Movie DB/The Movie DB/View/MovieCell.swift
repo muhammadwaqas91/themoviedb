@@ -25,7 +25,7 @@ class MovieCell: UICollectionViewCell {
             }
             
             viewModel.posterPath.bind {[weak self] (path) in
-                if let path = viewModel.getFullPosterPath() {
+                if let path = self?.viewModel?.getFullPosterPath() {
                     self?.posterImageView.downloadImage(urlString: path)
                 }
                 else {

@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol ConfigurationServiceProtocol : class {
-    func getConfigurations(params: [String: Any], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)?)
+protocol ConfigurationServiceProtocol {
+    mutating func getConfigurations(params: [String: Any], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)?)
 }
 
 extension ConfigurationService {
-    func cancelPreviousTask() {
+    mutating func cancelPreviousTask() {
         if let task = task {
             task.cancel()
         }
@@ -21,19 +21,19 @@ extension ConfigurationService {
     }
 }
 
-final class ConfigurationService : ResponseHandler, ConfigurationServiceProtocol {
+struct ConfigurationService : RequestServiceProtocol, ResponseHandlerProtocol, ConfigurationServiceProtocol {
     
-    static let shared = ConfigurationService()
+    static var shared = ConfigurationService()
     var configuration: Configuration?
     var task : URLSessionTask?
     
-    func getConfigurations(params: [String: Any] = [:], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)? = nil) {
+    mutating func getConfigurations(params: [String: Any] = [:], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)? = nil) {
         
         // cancel previous request if already in progress
 //        cancelPreviousTask()
         
         let urlString = encodedString(endPoint: Constants.configuration, params: params)
         let headers = ["Content-Type" : "application/json; charset=utf-8"]
-        task = RequestService().sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: ResponseHandler().result(success: success, failure: failure))
+        task = ConfigurationService.sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: ConfigurationService.result(success: success, failure: failure))
     }
 }

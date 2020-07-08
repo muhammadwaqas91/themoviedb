@@ -16,7 +16,15 @@ struct QueryFail: Decodable {
     let statusMessage : String?
 }
 
-final class JSONDecoderHelper {
+protocol JSONDecoderProtocol {
+    static func parse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: ((String?) -> Void)?)
+}
+
+final class JSONDecoderHelper: JSONDecoderProtocol {
+    
+}
+
+extension JSONDecoderProtocol {
     static func parse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) {
         if let error = error {
             if let failure = failure, error.localizedDescription != "cancelled" {
@@ -89,3 +97,4 @@ final class JSONDecoderHelper {
     }
 }
 
+extension JSONDecoder: JSONDecoderProtocol {}

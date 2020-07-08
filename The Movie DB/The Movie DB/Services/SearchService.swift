@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol SearchServiceProtocol : class {
-    func search(params: [String: Any], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)?)
+protocol SearchServiceProtocol {
+    mutating func search(params: [String: Any], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)?)
 }
 
 extension SearchService {
-    func cancelPreviousTask() {
+    mutating func cancelPreviousTask() {
         if let task = task {
             task.cancel()
         }
@@ -21,18 +21,18 @@ extension SearchService {
     }
 }
 
-final class SearchService : ResponseHandler, SearchServiceProtocol {
+struct SearchService: RequestServiceProtocol, ResponseHandlerProtocol, SearchServiceProtocol {
     
     static let shared = SearchService()
     var task : URLSessionTask?
     
-    func search(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
+    mutating func search(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
         
         // cancel previous request if already in progress
         cancelPreviousTask()
         
         let urlString = encodedString(endPoint: Constants.search, params: params)
         let headers = ["Content-Type" : "application/json; charset=utf-8"]
-        task = RequestService().sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: ResponseHandler().result(success: success, failure: failure))
+        task = SearchService.sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: SearchService.result(success: success, failure: failure))
     }
 }

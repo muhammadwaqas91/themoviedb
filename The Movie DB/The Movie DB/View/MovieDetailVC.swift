@@ -38,7 +38,7 @@ class MovieDetailVC: BaseVC {
         }
         
         viewModel.backdropPath.bind {[weak self] (path) in
-            if let path = viewModel.getFullBackdropPath() {
+            if let path = self?.viewModel?.getFullBackdropPath() {
                 self?.backdropImageView.downloadImage(urlString: path)
             }
             else {
@@ -49,7 +49,7 @@ class MovieDetailVC: BaseVC {
         }
         
         viewModel.posterPath.bind {[weak self] (path) in
-            if let path = viewModel.getFullPosterPath() {
+            if let path = self?.viewModel?.getFullPosterPath() {
                 self?.posterImageView.downloadImage(urlString: path)
             }
             else {

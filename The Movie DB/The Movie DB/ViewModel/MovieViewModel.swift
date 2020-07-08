@@ -96,7 +96,7 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
     var onErrorHandler: ((String?) -> Void)?
     
     var movie: Movie
-    weak var service: MovieServiceProtocol?
+    var service: MovieServiceProtocol?
     
     init(withMovie movie: Movie, service: MovieServiceProtocol?) {
         self.movie = movie
@@ -134,8 +134,8 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
         
         service?.getMovieDetail(movie_id: movie.id, params: [:], success: {[weak self] (movie) in
             self?.updateValues(movie: movie)
-            }, failure: { message in
-                if let handler = self.onErrorHandler {
+            }, failure: {[weak self] message in
+                if let handler = self?.onErrorHandler {
                     handler(message)
                 }
         })

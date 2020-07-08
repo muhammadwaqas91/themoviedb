@@ -91,9 +91,8 @@ class MovieListCollectionView: UICollectionView {
     private func bindViewModels() {
         popularViewModel.newMovies.bind { [weak self] _ in
             DispatchQueue.main.async {
-                
                 guard let newMovies = self?.popularViewModel.newMovies.value, let allMovies = self?.popularViewModel.allMovies.value, newMovies.count > 0 && allMovies.count > newMovies.count  else {
-                    UIView.animate(withDuration: 0) {[weak self] in
+                    UIView.animate(withDuration: 0) {
                         self?.performBatchUpdates({
                             self?.reloadSections(IndexSet(integer: 1))
                         }, completion: nil)
@@ -117,7 +116,7 @@ class MovieListCollectionView: UICollectionView {
         searchViewModel.newMovies.bind { [weak self] _ in
             DispatchQueue.main.async {
                 guard let newMovies = self?.searchViewModel.newMovies.value, let allMovies = self?.searchViewModel.allMovies.value, newMovies.count > 0 && allMovies.count > newMovies.count  else {
-                    UIView.animate(withDuration: 0) {[weak self] in
+                    UIView.animate(withDuration: 0) {
                         self?.performBatchUpdates({
                             self?.reloadSections(IndexSet(integer: 1))
                         }, completion: nil)

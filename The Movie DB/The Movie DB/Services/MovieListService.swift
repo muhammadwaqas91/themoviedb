@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol MovieListServiceProtocol : class {
-    func fetchPopularMovies(params: [String: Any], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)?)
+protocol MovieListServiceProtocol {
+    mutating func fetchPopularMovies(params: [String: Any], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)?)
 }
 
 extension MovieListService {
-    func cancelPreviousTask() {
+    mutating func cancelPreviousTask() {
         if let task = task {
             task.cancel()
         }
@@ -21,21 +21,21 @@ extension MovieListService {
     }
 }
 
-final class MovieListService : ResponseHandler, MovieListServiceProtocol {
+struct MovieListService : RequestServiceProtocol, ResponseHandlerProtocol, MovieListServiceProtocol {
     
     static let shared = MovieListService()
     var task : URLSessionTask?
     
     
     
-    func fetchPopularMovies(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
+    mutating func fetchPopularMovies(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {
         
         // cancel previous request if already in progress
 //        cancelPreviousTask()
         
         let urlString = encodedString(endPoint: Constants.popular, params: params)
        let headers = ["Content-Type" : "application/json; charset=utf-8"]
-        task = RequestService().sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: ResponseHandler().result(success: success, failure: failure))
+        task = MovieListService.sendRequest(urlString: urlString, method: .GET, HTTPHeaderFields: headers,  completion: MovieListService.result(success: success, failure: failure))
     }
     
 }

@@ -78,7 +78,7 @@ class MovieListViewModelTest: XCTestCase {
     }
 }
 
-fileprivate class MockService : MovieListServiceProtocol {
+fileprivate struct MockService : MovieListServiceProtocol {
     
     var movieList : MovieList?
     

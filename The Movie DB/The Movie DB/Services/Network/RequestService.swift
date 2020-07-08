@@ -9,12 +9,12 @@
 import Foundation
 
 
+protocol RequestServiceProtocol {
+    static func sendRequest(urlString: String, method: RequestMethod, session: URLSession, HTTPHeaderFields: [String : String], completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask?
+}
 
-
-
-final class RequestService {
-    
-    func sendRequest(urlString: String, method: RequestMethod = .GET, session: URLSession = URLSession(configuration: .default), HTTPHeaderFields: [String : String], completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask? {
+extension RequestServiceProtocol {
+    static func sendRequest(urlString: String, method: RequestMethod = .GET, session: URLSession = URLSession(configuration: .default), HTTPHeaderFields: [String : String], completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask? {
         
         guard let url = URL(string: urlString) else {
             return nil

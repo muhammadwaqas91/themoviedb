@@ -21,7 +21,7 @@ class SearchListViewModel: MovieListProtocol {
         }
     }
     
-    weak var searchService: SearchServiceProtocol?
+    var searchService: SearchServiceProtocol?
     
     init(_ searchService: SearchServiceProtocol) {
         self.searchService = searchService

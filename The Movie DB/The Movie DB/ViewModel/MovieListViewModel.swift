@@ -28,7 +28,7 @@ class MovieListViewModel: MovieListProtocol {
     
     var onErrorHandler: ((String?) -> Void)? = nil
     
-    weak var popularService: MovieListServiceProtocol?
+    var popularService: MovieListServiceProtocol?
     
     init(_ popularService: MovieListServiceProtocol) {
         self.popularService = popularService
