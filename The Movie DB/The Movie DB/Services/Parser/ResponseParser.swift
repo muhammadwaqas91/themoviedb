@@ -44,13 +44,19 @@ extension ResponseParserProtocol {
             }
         }
         else if let data = data, let image = UIImage(data: data) {
-            guard let absoluteString = response?.url?.absoluteString else {
+            guard let urlString = ImageDownloadService.urlString else {
                 success(image)
                 return
             }
             
-            ImageDownloadService.imageCache.setObject(image, forKey: absoluteString as NSString)
-            success(image)
+            ImageDownloadService.imageCache.setObject(image, forKey: urlString as NSString)
+            
+            if let image = ImageDownloadService.imageCache.object(forKey: urlString as NSString) {
+                success(image)
+            }
+            else {
+                success(image)
+            }
         }
         else if let failure = failure {
             failure("Image not available")

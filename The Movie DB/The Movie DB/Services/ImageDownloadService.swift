@@ -27,15 +27,18 @@ struct ImageDownloadService: RequestServiceProtocol, ResponseHandlerProtocol, Im
     static var shared = ImageDownloadService()
     var task : URLSessionTask?
     static let imageCache = NSCache<NSString, UIImage>()
+    static var urlString: String?
     
     mutating func downloadImage(urlString: String, success: @escaping((UIImage) -> Void), failure: ((String?) -> Void)? = nil) {
+        
+        ImageDownloadService.urlString = urlString
         
         if let image = ImageDownloadService.imageCache.object(forKey: urlString as NSString) {
             success(image)
         }
         else {
             print(urlString)
-            let task = ImageDownloadService.sendRequest(urlString: urlString, method: nil, completion: ImageDownloadService.result(success: success, failure: failure))
+            task = ImageDownloadService.sendRequest(urlString: urlString, method: nil, completion: ImageDownloadService.result(success: success, failure: failure))
             
             task?.resume()
         }
