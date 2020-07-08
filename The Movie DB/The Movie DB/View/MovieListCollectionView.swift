@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol MovieListCollectionViewProtocol: NSObjectProtocol {
-    func openMovie(_ viewModel: MovieViewModel)
+    func openMovie(_ viewModel: MovieDetailViewModel)
     func tagPressed(_ tag: String)
 }
 
@@ -193,7 +193,7 @@ extension MovieListCollectionView: UICollectionViewDataSource {
         let array = viewModel.allMovies.value
         let movie =  array[indexPath.row]
         
-        cell.viewModel = MovieViewModel(withMovie: movie, service: MovieService.shared)
+        cell.viewModel = MovieViewModel(withMovie: movie)
         
         return cell
     }
@@ -212,8 +212,8 @@ extension MovieListCollectionView: UICollectionViewDelegate {
         
         let movie =  array[indexPath.row]
         
-        let newViewModel = MovieViewModel(withMovie: movie, service: MovieService.shared)
-        protocolDelegate?.openMovie(newViewModel)
+        let viewModel = MovieDetailViewModel(withMovie: movie, service: MovieDetailService.shared)
+        protocolDelegate?.openMovie(viewModel)
     }
 }
 

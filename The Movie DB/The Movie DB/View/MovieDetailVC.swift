@@ -17,12 +17,12 @@ class MovieDetailVC: BaseVC {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var overviewHeadingLabel: UILabel!
+    @IBOutlet weak var taglineLabel: UILabel!
     @IBOutlet weak var overviewTextView: UITextView!
     
     @IBOutlet weak var favButton: UIButton!
         
-    var viewModel: MovieViewModel? {
+    var viewModel: MovieDetailViewModel? {
         didSet {
             fillUI()
         }
@@ -39,7 +39,16 @@ class MovieDetailVC: BaseVC {
         
         viewModel.backdropPath.bind {[weak self] (path) in
             if let path = self?.viewModel?.getFullBackdropPath() {
-                self?.backdropImageView.downloadImage(urlString: path)
+//                self?.backdropImageView.downloadImage(urlString: path)
+
+                DispatchQueue.main.async {
+                    self?.backdropImageView.image = nil
+                }
+                ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
+                    DispatchQueue.main.async {
+                        self?.backdropImageView.image = image
+                    }
+                })
             }
             else {
                 DispatchQueue.main.async {
@@ -50,7 +59,16 @@ class MovieDetailVC: BaseVC {
         
         viewModel.posterPath.bind {[weak self] (path) in
             if let path = self?.viewModel?.getFullPosterPath() {
-                self?.posterImageView.downloadImage(urlString: path)
+//                self?.posterImageView.downloadImage(urlString: path)
+
+                DispatchQueue.main.async {
+                    self?.posterImageView.image = nil
+                }
+                ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
+                    DispatchQueue.main.async {
+                        self?.posterImageView.image = image
+                    }
+                })
             }
             else {
                 DispatchQueue.main.async {
@@ -84,9 +102,9 @@ class MovieDetailVC: BaseVC {
             }
         }
         
-        viewModel.overviewHeading.bind {[weak self] (text) in
+        viewModel.tagline.bind {[weak self] (text) in
             DispatchQueue.main.async {
-                self?.overviewHeadingLabel.text = text
+                self?.taglineLabel.text = text
             }
         }
         

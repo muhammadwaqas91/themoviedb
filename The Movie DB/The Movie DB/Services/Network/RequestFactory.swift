@@ -14,9 +14,12 @@ enum RequestMethod: String {
 }
 
 final class RequestFactory {
-    static func request(method: RequestMethod, url: URL) -> URLRequest {
+    static func request(method: RequestMethod? = nil, url: URL, _ cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad) -> URLRequest {
         var request = URLRequest(url: url)
-        request.httpMethod = method.rawValue
+        if let method = method {
+            request.httpMethod = method.rawValue
+        }
+        request.cachePolicy = cachePolicy
         return request
     }
 }

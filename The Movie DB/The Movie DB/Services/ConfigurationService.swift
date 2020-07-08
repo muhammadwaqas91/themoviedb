@@ -21,7 +21,7 @@ extension ConfigurationService {
     }
 }
 
-struct ConfigurationService : RequestServiceProtocol, ResponseHandlerProtocol, ConfigurationServiceProtocol {
+struct ConfigurationService : RequestServiceProtocol, URLEncodingProtocol, ResponseHandlerProtocol, ConfigurationServiceProtocol {
     
     static var shared = ConfigurationService()
     var configuration: Configuration?

@@ -160,10 +160,10 @@
                         <outlet property="durationLabel" destination="opr-XD-Ap3" id="JVN-f8-wr4"/>
                         <outlet property="favButton" destination="5Fq-1B-DHa" id="PMh-tg-Jjc"/>
                         <outlet property="genreLabel" destination="cAS-I0-wX4" id="LFa-p7-3Xs"/>
-                        <outlet property="overviewHeadingLabel" destination="o8r-Ax-VPO" id="lBu-Nn-DBB"/>
                         <outlet property="overviewTextView" destination="zh0-Fy-GzG" id="f3R-hS-aDS"/>
                         <outlet property="posterImageView" destination="6hq-Rw-Uei" id="OIQ-Xa-bnB"/>
                         <outlet property="releaseDateLabel" destination="gt2-8a-pAe" id="dKf-Dd-pcP"/>
+                        <outlet property="taglineLabel" destination="o8r-Ax-VPO" id="lBu-Nn-DBB"/>
                         <outlet property="titleLabel" destination="XdU-x1-qOu" id="fmG-Kt-15u"/>
                     </connections>
                 </viewController>

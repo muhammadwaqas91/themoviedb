@@ -1,27 +1,71 @@
 //
-//  JSONDecoderHelper.swift
+//  ResponseParser.swift
 //  The Movie DB
 //
-//  Created by Muhammad Waqas on 6/30/20.
-//  Copyright © 2020 Muhammad Waqas. All rights reserved.
+//  Created by Muhammad Waqas on 7/8/20.
+//  Copyright © 2020 Muhammad Jabbar. All rights reserved.
 //
 
 import Foundation
+import UIKit
 
-struct QueryFail: Decodable {
-    
-    // In case of error/ invalid query
-    let success: Bool?
-    let statusCode: Int?
-    let statusMessage : String?
+// MARK: ResponseParserProtocol
+
+
+// put all parser protocols here
+// this way we will conform just ResponseParserProtocol to ResponseHandlerProtocol
+// and good to go
+
+protocol ResponseParserProtocol: JSONDecoderProtocol {
+    static func parse(data: Data?, response: URLResponse?, error: Error?, success: @escaping (Data) -> Void, failure: ((String?) -> Void)?)
+    static func parse(data: Data?, response: URLResponse?, error: Error?, success: @escaping (UIImage) -> Void, failure: ((String?) -> Void)?)
 }
+
+extension ResponseParserProtocol {
+    
+    static func parse(data: Data?, response: URLResponse?, error: Error?, success: @escaping (Data) -> Void, failure: ((String?) -> Void)? = nil) {
+        if let error = error {
+            if let failure = failure, error.localizedDescription != "cancelled" {
+                failure(error.localizedDescription)
+            }
+        }
+        else if let data = data {
+            success(data)
+        }
+        else {
+            print("No error or data")
+        }
+    }
+    
+    static func parse(data: Data?, response: URLResponse?, error: Error?, success: @escaping (UIImage) -> Void, failure: ((String?) -> Void)? = nil) {
+        if let error = error {
+            if let failure = failure, error.localizedDescription != "cancelled" {
+                failure(error.localizedDescription)
+            }
+        }
+        else if let data = data, let image = UIImage(data: data) {
+            guard let absoluteString = response?.url?.absoluteString else {
+                success(image)
+                return
+            }
+            
+            ImageDownloadService.imageCache.setObject(image, forKey: absoluteString as NSString)
+            success(image)
+        }
+        else if let failure = failure {
+            failure("Image not available")
+        }
+    }
+
+}
+
+struct ResponseParser: ResponseParserProtocol {}
+
+
+// MARK: JSONDecoderProtocol
 
 protocol JSONDecoderProtocol {
     static func parse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: ((String?) -> Void)?)
-}
-
-struct JSONDecoderHelper: JSONDecoderProtocol {
-    
 }
 
 extension JSONDecoderProtocol {
@@ -91,10 +135,16 @@ extension JSONDecoderProtocol {
                 }
             }
         }
-        else {
-            print("No error or data")
+        else if let failure = failure {
+            failure("No data available")
         }
     }
 }
 
-extension JSONDecoder: JSONDecoderProtocol {}
+struct QueryFail: Decodable {
+    
+    // In case of error/ invalid query
+    let success: Bool?
+    let statusCode: Int?
+    let statusMessage : String
+}

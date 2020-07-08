@@ -66,7 +66,7 @@ extension MovieListVC: MovieSearchBarDelegate {
 
 
 extension MovieListVC: MovieListCollectionViewProtocol {
-    func openMovie(_ viewModel: MovieViewModel) {
+    func openMovie(_ viewModel: MovieDetailViewModel) {
         Router.showMovieDetailVC(from: self, viewModel: viewModel)
     }
     

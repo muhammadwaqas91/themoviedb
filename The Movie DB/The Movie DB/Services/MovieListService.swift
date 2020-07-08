@@ -21,9 +21,9 @@ extension MovieListService {
     }
 }
 
-struct MovieListService : RequestServiceProtocol, ResponseHandlerProtocol, MovieListServiceProtocol {
+struct MovieListService : RequestServiceProtocol, URLEncodingProtocol, ResponseHandlerProtocol, MovieListServiceProtocol {
     
-    static let shared = MovieListService()
+    static var shared = MovieListService()
     var task : URLSessionTask?
     
     mutating func fetchPopularMovies(params: [String: Any] = [:], success:@escaping (MovieList) -> (), failure: ((String?) -> Void)? = nil) {

@@ -53,7 +53,9 @@ class MovieListViewModelTest: XCTestCase {
         
         var movieList: [Movie] = []
         for _ in 1...10 {
-            let movie = Movie(genres: [Genre(id: 1, name: "Action"), Genre(id: 2, name: "Action2"), Genre(id: 3, name: "Action3")], spokenLanguages: [SpokenLanguage(iso639_1: "L1", name: "language"), SpokenLanguage(iso639_1: "L2", name: "language2")], productionCompanies: [], productionCountries: [], isFavorite: false, adult: false, backdropPath: nil, budget: nil, homepage: nil, id: 181812, imdbId: nil, originalLanguage: "English", originalTitle: "Avengers", overview: "This is OverView", popularity: nil, posterPath: "/db32LaOibwEliAmSL2jjDF6oDdj.jpg", releaseDate: "2017", revenue: nil, runtime: 200, status: nil, tagline: "tagline", title: "title", video: nil, voteAverage: nil, voteCount: nil)
+            
+            let movie = Movie(popularity: 0.0, voteCount: 0, video: false, posterPath: "/db32LaOibwEliAmSL2jjDF6oDdj.jpg", id: 181812, adult: false, backdropPath: "", originalLanguage: "English", originalTitle: "Avengers", genreIds: [], title: "Avengers", voteAverage: 0.0, overview: "Overview here", releaseDate: "2017-12-12", isFavorite: false)
+            
             movieList.append(movie)
         }
         

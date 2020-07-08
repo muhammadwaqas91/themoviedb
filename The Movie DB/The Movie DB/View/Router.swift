@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 struct Router {
-    static func showMovieDetailVC(from controller: BaseVC, viewModel: MovieViewModel) {
+    static func showMovieDetailVC(from controller: BaseVC, viewModel: MovieDetailViewModel) {
         let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MovieDetailVC") as! MovieDetailVC
         vc.viewModel = viewModel
         controller.navigationController?.show(vc, sender: true)

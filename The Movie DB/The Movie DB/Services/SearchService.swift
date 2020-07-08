@@ -21,7 +21,7 @@ extension SearchService {
     }
 }
 
-struct SearchService: RequestServiceProtocol, ResponseHandlerProtocol, SearchServiceProtocol {
+struct SearchService: RequestServiceProtocol, URLEncodingProtocol, ResponseHandlerProtocol, SearchServiceProtocol {
     
     static let shared = SearchService()
     var task : URLSessionTask?

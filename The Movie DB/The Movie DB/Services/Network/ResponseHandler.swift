@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol URLEncodingProtocol {
     func encodedString(baseURL: String, endPoint: String, params: [String: Any]) -> String
@@ -26,15 +27,37 @@ extension URLEncodingProtocol {
     }
 }
 
-protocol ResponseHandlerProtocol: URLEncodingProtocol, JSONDecoderProtocol {
+protocol ResponseHandlerProtocol: ResponseParserProtocol {
     static func result<T: Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void)
+    
+    static func result(success: @escaping (Data) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void)
+    
+    static func result(success: @escaping (UIImage) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void)
 }
 
 extension ResponseHandlerProtocol {
     static func result<T: Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
         return { data, response, error in
             DispatchQueue.global(qos: .background).async(execute: {
-                JSONDecoderHelper.parse(data: data, response: response, error: error, success: success, failure: failure)
+                ResponseParser.parse(data: data, response: response, error: error, success: success, failure: failure)
+            })
+            
+        }
+    }
+    
+    static func result(success: @escaping (Data) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
+        return { data, response, error in
+            DispatchQueue.global(qos: .background).async(execute: {
+                ResponseParser.parse(data: data, response: response, error: error, success: success, failure: failure)
+            })
+            
+        }
+    }
+    
+    static func result(success: @escaping (UIImage) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
+        return { data, response, error in
+            DispatchQueue.global(qos: .background).async(execute: {
+                ResponseParser.parse(data: data, response: response, error: error, success: success, failure: failure)
             })
             
         }

@@ -32,21 +32,23 @@ class MovieViewModelTest: XCTestCase {
     //    }
     
     
-    var movie : Movie!
-    var viewModel : MovieViewModel!
+    var movieDetail : MovieDetail!
+    var viewModel : MovieDetailViewModel!
     fileprivate var mockService : MockService!
     
     override func setUp() {
         super.setUp()
         self.mockService = MockService()
-        self.movie = Movie(genres: [Genre(id: 1, name: "Action"), Genre(id: 2, name: "Action2"), Genre(id: 3, name: "Action3")], spokenLanguages: [SpokenLanguage(iso639_1: "L1", name: "language"), SpokenLanguage(iso639_1: "L2", name: "language2")], productionCompanies: [], productionCountries: [], isFavorite: false, adult: false, backdropPath: nil, budget: nil, homepage: nil, id: 181812, imdbId: nil, originalLanguage: "English", originalTitle: "Avengers", overview: "This is OverView", popularity: nil, posterPath: "/db32LaOibwEliAmSL2jjDF6oDdj.jpg", releaseDate: "2017", revenue: nil, runtime: 200, status: nil, tagline: "tagline", title: "title", video: nil, voteAverage: nil, voteCount: nil)
         
-        self.viewModel = MovieViewModel(withMovie: movie, service: MovieService.shared)
+        
+//        self.movie = Movie(genres: [Genre(id: 1, name: "Action"), Genre(id: 2, name: "Action2"), Genre(id: 3, name: "Action3")], spokenLanguages: [SpokenLanguage(iso639_1: "L1", name: "language"), SpokenLanguage(iso639_1: "L2", name: "language2")], productionCompanies: [], productionCountries: [], isFavorite: false, adult: false, backdropPath: nil, budget: nil, homepage: nil, id: 181812, imdbId: nil, originalLanguage: "English", originalTitle: "Avengers", overview: "This is OverView", popularity: nil, posterPath: "/db32LaOibwEliAmSL2jjDF6oDdj.jpg", releaseDate: "2017", revenue: nil, runtime: 200, status: nil, tagline: "tagline", title: "title", video: nil, voteAverage: nil, voteCount: nil)
+//
+//        self.viewModel = MovieViewModel(withMovie: movie)
     }
     
     override func tearDown() {
         self.mockService = nil
-        self.movie = nil
+        self.movieDetail = nil
         self.viewModel = nil
         super.tearDown()
     }
@@ -56,10 +58,10 @@ class MovieViewModelTest: XCTestCase {
         let expectation = XCTestExpectation(description: "Movie List Fetch")
         
         
-        // giving a service mocking movie
-        let movie = Movie(genres: [Genre(id: 1, name: "Action"), Genre(id: 2, name: "Action2"), Genre(id: 3, name: "Action3")], spokenLanguages: [SpokenLanguage(iso639_1: "L1", name: "language"), SpokenLanguage(iso639_1: "L2", name: "language2")], productionCompanies: [], productionCountries: [], isFavorite: false, adult: false, backdropPath: nil, budget: nil, homepage: nil, id: 181812, imdbId: nil, originalLanguage: "English", originalTitle: "Avengers", overview: "This is OverView", popularity: nil, posterPath: "/db32LaOibwEliAmSL2jjDF6oDdj.jpg", releaseDate: "2017", revenue: nil, runtime: 200, status: nil, tagline: "tagline", title: "title", video: nil, voteAverage: nil, voteCount: nil)
+        // giving a service mocking movie detail
+        let movieDetail = MovieDetail(budget: 0, homepage: "", imdbId: "", revenue: 0, runtime: 120, status: "", tagline: "Tag line", video: false, voteCount: 0, genres: [], spokenLanguages: [], productionCompanies: [], productionCountries: [], popularity: 0.0, posterPath: "/db32LaOibwEliAmSL2jjDF6oDdj.jpg", id: 181812, adult: false, backdropPath: "", originalLanguage: "", originalTitle: "", genreIds: [], title: "", voteAverage: 0.0, overview: "", releaseDate: "2017-12-12", isFavorite: false)
         
-        mockService.movie = movie
+        mockService.movieDetail = movieDetail
         
         viewModel.onErrorHandler = { _ in
             XCTAssert(false, "ViewModel should not be able to fetch without service")
@@ -79,11 +81,11 @@ class MovieViewModelTest: XCTestCase {
     }
 }
 
-fileprivate struct MockService : MovieServiceProtocol {
-    var movie : Movie?
-    func getMovieDetail(movie_id: Int, params: [String : Any], success: @escaping (Movie) -> (), failure: ((String?) -> Void)?) {
-        if let movie = movie {
-            success(movie)
+fileprivate struct MockService : MovieDetailServiceProtocol {
+    var movieDetail : MovieDetail?
+    func getMovieDetail(movie_id: Int, params: [String : Any], success: @escaping (MovieDetail) -> (), failure: ((String?) -> Void)?) {
+        if let movieDetail = movieDetail {
+            success(movieDetail)
         }
         else {
             if let failure = failure {
