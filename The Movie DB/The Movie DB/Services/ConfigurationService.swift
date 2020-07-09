@@ -14,9 +14,7 @@ protocol ConfigurationServiceProtocol {
 
 extension ConfigurationService {
     mutating func cancelPreviousTask() {
-        if let task = task {
-            task.cancel()
-        }
+        task?.cancel()
         task = nil
     }
 }

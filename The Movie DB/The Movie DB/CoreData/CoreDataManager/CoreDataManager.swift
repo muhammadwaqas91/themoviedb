@@ -50,9 +50,7 @@ class CoreDataManager   {
             fetchRequest.fetchLimit = fetchLimit
         }
         
-        if let predicate = predicate {
-            fetchRequest.predicate = predicate
-        }
+        fetchRequest.predicate = predicate
         
         if let sortBy = sortBy    {
             var sortDescriptors = [NSSortDescriptor]()

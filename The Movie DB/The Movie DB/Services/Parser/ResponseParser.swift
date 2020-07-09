@@ -24,10 +24,8 @@ protocol ResponseParserProtocol: JSONDecoderProtocol {
 extension ResponseParserProtocol {
     
     static func parse(data: Data?, response: URLResponse?, error: Error?, success: @escaping (Data) -> Void, failure: ((String?) -> Void)? = nil) {
-        if let error = error {
-            if let failure = failure, error.localizedDescription != "cancelled" {
-                failure(error.localizedDescription)
-            }
+        if let error = error, error.localizedDescription != "cancelled" {
+            failure?(error.localizedDescription)
         }
         else if let data = data {
             success(data)
@@ -38,10 +36,8 @@ extension ResponseParserProtocol {
     }
     
     static func parse(data: Data?, response: URLResponse?, error: Error?, success: @escaping (UIImage) -> Void, failure: ((String?) -> Void)? = nil) {
-        if let error = error {
-            if let failure = failure, error.localizedDescription != "cancelled" {
-                failure(error.localizedDescription)
-            }
+        if let error = error, error.localizedDescription != "cancelled" {
+            failure?(error.localizedDescription)
         }
         else if let data = data, let image = UIImage(data: data) {
             guard let urlString = ImageDownloadService.urlString else {
@@ -58,8 +54,8 @@ extension ResponseParserProtocol {
                 success(image)
             }
         }
-        else if let failure = failure {
-            failure("Image not available")
+        else {
+            failure?("Image not available")
         }
     }
 
@@ -76,10 +72,8 @@ protocol JSONDecoderProtocol {
 
 extension JSONDecoderProtocol {
     static func parse<T: Decodable>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) {
-        if let error = error {
-            if let failure = failure, error.localizedDescription != "cancelled" {
-                failure(error.localizedDescription)
-            }
+        if let error = error, error.localizedDescription != "cancelled" {
+            failure?(error.localizedDescription)
         }
         else if let data = data {
             do {
@@ -93,36 +87,30 @@ extension JSONDecoderProtocol {
                     }
                     else {
                         let failed = try decoder.decode(QueryFail.self, from: data)
-                        if let failure = failure {
-                            failure(failed.statusMessage)
-                        }
+                        failure?(failed.statusMessage)
                     }
                 }
                 
             }
             catch let DecodingError.dataCorrupted(context) {
                 print("DecodingError.dataCorrupted '\(context)'")
-                if let failure = failure {
-                    failure(context.debugDescription)
-                }
-            } catch let DecodingError.keyNotFound(key, context) {
+                failure?(context.debugDescription)
+            }
+            catch let DecodingError.keyNotFound(key, context) {
                 print("DecodingError.keyNotFound")
                 print("Key '\(key)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                if let failure = failure {
-                    failure(context.debugDescription)
-                }
+                failure?(context.debugDescription)
                 
-            } catch let DecodingError.valueNotFound(value, context) {
+            }
+            catch let DecodingError.valueNotFound(value, context) {
                 print("DecodingError.valueNotFound")
                 
                 print("Value '\(value)' not found:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                if let failure = failure {
-                    failure(context.debugDescription)
-                }
-                
-            } catch let DecodingError.typeMismatch(type, context)  {
+                failure?(context.debugDescription)
+            }
+            catch let DecodingError.typeMismatch(type, context)  {
                 print("DecodingError.typeMismatch")
                 
                 for key in context.codingPath {
@@ -131,18 +119,14 @@ extension JSONDecoderProtocol {
                 
                 print("Type '\(type)' mismatch:", context.debugDescription)
                 print("codingPath:", context.codingPath)
-                if let failure = failure {
-                    failure(context.debugDescription)
-                }
-                
-            } catch {
-                if let failure = failure {
-                    failure(error.localizedDescription)
-                }
+                failure?(context.debugDescription)
+            }
+            catch {
+                failure?(error.localizedDescription)
             }
         }
-        else if let failure = failure {
-            failure("No data available")
+        else {
+            failure?("No data available")
         }
     }
 }

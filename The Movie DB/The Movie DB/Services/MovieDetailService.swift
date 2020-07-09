@@ -14,9 +14,7 @@ protocol MovieDetailServiceProtocol {
 
 extension MovieDetailService {
     mutating func cancelPreviousTask() {
-        if let task = task {
-            task.cancel()
-        }
+        task?.cancel()
         task = nil
     }
 }

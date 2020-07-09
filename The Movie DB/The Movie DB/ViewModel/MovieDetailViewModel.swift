@@ -18,7 +18,6 @@ protocol MovieDetailViewModelProtocol: MovieViewModelProtocol {
 }
 
 class MovieDetailViewModel: NSObject, MovieDetailViewModelProtocol {
-    var movieDetail: MovieDetail?
     
     var genreTitle: Dynamic<String?>
     
@@ -41,10 +40,10 @@ class MovieDetailViewModel: NSObject, MovieDetailViewModelProtocol {
     var onErrorHandler: ((String?) -> Void)?
     
     var movie: Movie
-    
+    var movieDetail: MovieDetail?
     var service: MovieDetailServiceProtocol?
     
-    init(withMovie movie: Movie, service: MovieDetailServiceProtocol?) {
+    init(_ movie: Movie, _ service: MovieDetailServiceProtocol?) {
         self.movie = movie
         self.service = service
         
@@ -64,14 +63,11 @@ class MovieDetailViewModel: NSObject, MovieDetailViewModelProtocol {
     }
     
     func fetchMovieDetail() {
-        
         service?.getMovieDetail(movie_id: movie.id, params: [:], success: {[weak self] (movieDetail) in
             self?.movieDetail = movieDetail
             self?.updateValues(movieDetail: movieDetail)
             }, failure: {[weak self] message in
-                if let handler = self?.onErrorHandler {
-                    handler(message)
-                }
+                self?.onErrorHandler?(message)
         })
     }
     

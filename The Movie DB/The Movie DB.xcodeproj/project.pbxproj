@@ -48,13 +48,11 @@
 		FDE28F8324AB858700E8D841 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8224AB858700E8D841 /* RequestService.swift */; };
 		FDE28F8E24ABB24900E8D841 /* MovieListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8D24ABB24900E8D841 /* MovieListService.swift */; };
 		FDE28F9024ABBB5000E8D841 /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */; };
-		FDE28F9224ABD73600E8D841 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9124ABD73600E8D841 /* SearchService.swift */; };
-		FDE28F9424ABE66300E8D841 /* SearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */; };
 		FDE28F9824AC171900E8D841 /* MovieSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */; };
 		FDE28FA124AC345F00E8D841 /* HistoryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28F9F24AC345F00E8D841 /* HistoryTagView.swift */; };
 		FDE28FA224AC345F00E8D841 /* HistoryTagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */; };
 		FDE28FA424AC5AC800E8D841 /* MovieListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28FA324AC5AC800E8D841 /* MovieListViewModelTest.swift */; };
-		FDE28FA624AC771B00E8D841 /* MovieViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28FA524AC771B00E8D841 /* MovieViewModelTest.swift */; };
+		FDE28FA624AC771B00E8D841 /* MovieDetailViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE28FA524AC771B00E8D841 /* MovieDetailViewModelTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,13 +128,11 @@
 		FDE28F8224AB858700E8D841 /* RequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestService.swift; sourceTree = "<group>"; };
 		FDE28F8D24ABB24900E8D841 /* MovieListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListService.swift; sourceTree = "<group>"; };
 		FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
-		FDE28F9124ABD73600E8D841 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
-		FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewModel.swift; sourceTree = "<group>"; };
 		FDE28F9724AC171800E8D841 /* MovieSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchBar.swift; sourceTree = "<group>"; };
 		FDE28F9F24AC345F00E8D841 /* HistoryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTagView.swift; sourceTree = "<group>"; };
 		FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTagView.xib; sourceTree = "<group>"; };
 		FDE28FA324AC5AC800E8D841 /* MovieListViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModelTest.swift; sourceTree = "<group>"; };
-		FDE28FA524AC771B00E8D841 /* MovieViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModelTest.swift; sourceTree = "<group>"; };
+		FDE28FA524AC771B00E8D841 /* MovieDetailViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModelTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,7 +240,7 @@
 			children = (
 				FD2EC4B724A7A5BD00895D94 /* The_Movie_DBTests.swift */,
 				FDE28FA324AC5AC800E8D841 /* MovieListViewModelTest.swift */,
-				FDE28FA524AC771B00E8D841 /* MovieViewModelTest.swift */,
+				FDE28FA524AC771B00E8D841 /* MovieDetailViewModelTest.swift */,
 				FD2EC4B924A7A5BD00895D94 /* Info.plist */,
 			);
 			path = "The Movie DBTests";
@@ -320,7 +316,6 @@
 			isa = PBXGroup;
 			children = (
 				FD70DDE624A9669A00FCFAAF /* MovieListViewModel.swift */,
-				FDE28F9324ABE66300E8D841 /* SearchListViewModel.swift */,
 				FD70DDEA24A9988600FCFAAF /* MovieViewModel.swift */,
 				FD84287D24B605E20032B087 /* MovieDetailViewModel.swift */,
 			);
@@ -344,7 +339,6 @@
 				FD84287F24B618210032B087 /* MovieDetailService.swift */,
 				FDE28F8D24ABB24900E8D841 /* MovieListService.swift */,
 				FDE28F8F24ABBB5000E8D841 /* ConfigurationService.swift */,
-				FDE28F9124ABD73600E8D841 /* SearchService.swift */,
 				FDE28F8A24AB867B00E8D841 /* Network */,
 				FDE28F8B24AB86B200E8D841 /* Parser */,
 			);
@@ -613,7 +607,6 @@
 				FD70DDF524AA0BEA00FCFAAF /* MovieDetailVC.swift in Sources */,
 				FDE28F8324AB858700E8D841 /* RequestService.swift in Sources */,
 				FD84288224B623580032B087 /* ResponseParser.swift in Sources */,
-				FDE28F9424ABE66300E8D841 /* SearchListViewModel.swift in Sources */,
 				FD70DDD424A7E5A700FCFAAF /* Extensions.swift in Sources */,
 				FD8C11E324B370F300E466E1 /* JSONToNSManagedObjectWrapper.swift in Sources */,
 				FD0D180524AAA69600BE5CB2 /* Reachability.swift in Sources */,
@@ -642,7 +635,6 @@
 				FD2EC4E224A7A7B800895D94 /* The_Movie_DB.xcdatamodeld in Sources */,
 				FD8C11E224B370F300E466E1 /* CoreDataStack.swift in Sources */,
 				FD70DDE324A9549100FCFAAF /* Dynamic.swift in Sources */,
-				FDE28F9224ABD73600E8D841 /* SearchService.swift in Sources */,
 				FD84287C24B602BA0032B087 /* MovieDetail.swift in Sources */,
 				FD70DDDD24A94AF100FCFAAF /* MovieCell.swift in Sources */,
 				FD2EC4E124A7A7B800895D94 /* SceneDelegate.swift in Sources */,
@@ -655,7 +647,7 @@
 			files = (
 				FD2EC4B824A7A5BD00895D94 /* The_Movie_DBTests.swift in Sources */,
 				FDE28FA424AC5AC800E8D841 /* MovieListViewModelTest.swift in Sources */,
-				FDE28FA624AC771B00E8D841 /* MovieViewModelTest.swift in Sources */,
+				FDE28FA624AC771B00E8D841 /* MovieDetailViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

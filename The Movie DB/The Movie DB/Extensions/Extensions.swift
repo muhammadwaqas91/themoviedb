@@ -17,7 +17,7 @@ extension UIViewController {
             while (vc?.presentedViewController != nil) {
                 vc = vc?.presentedViewController
             }
-            return rootViewController
+            return vc
         }
         return nil
     }
@@ -30,14 +30,10 @@ extension UIViewController {
             }
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let OKAction = UIAlertAction(title: "OK", style: .default) { action in
-                if let success = success {
-                    success()
-                }
+                success?()
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { action in
-                if let failure = failure {
-                    failure()
-                }
+                failure?()
             }
             alertController.addAction(OKAction)
             alertController.addAction(cancel)
@@ -139,7 +135,7 @@ extension UIViewController {
 
 extension UIImageView {
  
-    func downloadImage(urlString: String, success: ((_ image: UIImage?) -> Void)? = nil, failure: ((_ error: Error?) -> Void)? = nil) {
+    func downloadImage(urlString: String, success: ((_ image: UIImage?) -> Void)? = nil, failure: ((String) -> Void)? = nil) {
         
         let imageCache = NSCache<NSString, UIImage>()
 
@@ -151,9 +147,7 @@ extension UIImageView {
             DispatchQueue.main.async {[weak self] in
                 self?.image = image
             }
-            if let success = success {
-                success(image)
-            }
+            success?(image)
         } else {
             guard let url = URL(string: urlString) else {
                 print("failed to create url")
@@ -166,20 +160,14 @@ extension UIImageView {
                 // response received, now switch back to main queue
                 DispatchQueue.main.async {[weak self] in
                     if let error = error {
-                        if let failure = failure {
-                            failure(error)
-                        }
+                        failure?(error.localizedDescription)
                     }
                     else if let data = data, let image = UIImage(data: data) {
                         imageCache.setObject(image, forKey: url.absoluteString as NSString)
                         self?.image = image
-                        if let success = success {
-                            success(image)
-                        }
+                        success?(image)
                     } else {
-                        if let failure = failure {
-                            failure(nil)
-                        }
+                        failure?("Image not available")
                     }
                 }
             }

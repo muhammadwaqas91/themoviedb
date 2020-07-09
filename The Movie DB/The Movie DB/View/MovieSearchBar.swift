@@ -10,10 +10,7 @@ import Foundation
 import UIKit
 
 protocol MovieSearchBarDelegate: NSObjectProtocol {
-     // called when text changes (including clear)
-    func showHistoryTags(_ showTags: Bool, _ continueSearch: Bool)
-    func searchBarTextDidChange(_ text: String, _ hasText: Bool)
-    
+    func updateQuery(_ text: String?, _ isFirstResponder: Bool)
 }
 
 class MovieSearchBar: UISearchBar {
@@ -27,10 +24,6 @@ class MovieSearchBar: UISearchBar {
         return false
     }
     
-    var continueSearch: Bool  {
-        return hasText
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         delegate = self
@@ -41,19 +34,17 @@ extension MovieSearchBar: UISearchBarDelegate {
     
     // called when text starts editing
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        movieSearchBarDelegate?.showHistoryTags(!hasText, continueSearch)
+        movieSearchBarDelegate?.updateQuery(text, true)
     }
     
     // called when text ends editing
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        print("searchBarTextDidEndEditing")
-        movieSearchBarDelegate?.showHistoryTags(false, continueSearch)
+        movieSearchBarDelegate?.updateQuery(text, false)
     }
 
      // called when text changes (including clear)
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("textDidChange: searchText")
-        movieSearchBarDelegate?.searchBarTextDidChange(text ?? "", hasText)
+        movieSearchBarDelegate?.updateQuery(text, true)
     }
     
      // called when keyboard search button pressed

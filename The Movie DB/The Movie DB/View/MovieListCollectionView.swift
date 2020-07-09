@@ -20,43 +20,33 @@ class MovieListCollectionView: UICollectionView {
     weak var source: UIViewController?
     weak var protocolDelegate: MovieListCollectionViewProtocol?
     
-    private var popularViewModel = MovieListViewModel(MovieListService.shared)
-    private var searchViewModel = SearchListViewModel(SearchService.shared)
-    
-    private var viewModel: MovieListProtocol {
-        get {
-            if isSearching {
-                return searchViewModel
-            }
-            return popularViewModel
-        }
-    }
+    private var viewModel = MovieListViewModel(.popular)
     
     var query: String = "" {
         didSet {
-            if query.isEmpty {
-                isSearching = false
-                showTags = true
+            if query == oldValue {
+                // do nothing
+                // empty searchBar begin/end editing or has text but is trying paging
+            }
+            else if query.isEmpty && !oldValue.isEmpty {
+                viewModel.serviceType = .popular
             }
             else {
-                showTags = false
-                isSearching = true
-                searchViewModel.query = query
+                viewModel.query = query
+                viewModel.serviceType = .search
             }
         }
     }
     
-    var isSearching: Bool = false {
+    var showTags: Bool = false {
         didSet {
-            if isSearching {
-            }
-            else {
-                reloadData()
+            UIView.animate(withDuration: 0) {[weak self] in
+                self?.performBatchUpdates({
+                    self?.reloadSections(IndexSet(integer: 0))
+                }, completion: nil)
             }
         }
     }
-    
-    var showTags: Bool = false
     
     
     override func awakeFromNib() {
@@ -71,7 +61,7 @@ class MovieListCollectionView: UICollectionView {
         setFlowLayoutSize()
         bindViewModels()
         
-        viewModel.fetchMovies(after: 0)
+        viewModel.serviceType = .popular
     }
     
     private func setFlowLayoutSize() {
@@ -89,9 +79,9 @@ class MovieListCollectionView: UICollectionView {
     }
     
     private func bindViewModels() {
-        popularViewModel.newMovies.bind { [weak self] _ in
+        viewModel.newMovies.bind { [weak self] _ in
             DispatchQueue.main.async {
-                guard let newMovies = self?.popularViewModel.newMovies.value, let allMovies = self?.popularViewModel.allMovies.value, newMovies.count > 0 && allMovies.count > newMovies.count  else {
+                guard let newMovies = self?.viewModel.newMovies.value, let allMovies = self?.viewModel.allMovies, newMovies.count > 0 && allMovies.count > newMovies.count  else {
                     UIView.animate(withDuration: 0) {
                         self?.performBatchUpdates({
                             self?.reloadSections(IndexSet(integer: 1))
@@ -109,30 +99,7 @@ class MovieListCollectionView: UICollectionView {
             }
         }
         
-        popularViewModel.onErrorHandler = { [weak self] message in
-            self?.source?.showAlert(message: message)
-        }
-        
-        searchViewModel.newMovies.bind { [weak self] _ in
-            DispatchQueue.main.async {
-                guard let newMovies = self?.searchViewModel.newMovies.value, let allMovies = self?.searchViewModel.allMovies.value, newMovies.count > 0 && allMovies.count > newMovies.count  else {
-                    UIView.animate(withDuration: 0) {
-                        self?.performBatchUpdates({
-                            self?.reloadSections(IndexSet(integer: 1))
-                        }, completion: nil)
-                    }
-                    return
-                }
-                
-                self?.performBatchUpdates({
-                    let indexes = allMovies.findIndexes(newMovies)
-                    let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 1)})
-                    self?.insertItems(at: indexPaths)
-                }, completion: nil)
-            }
-        }
-        searchViewModel.page = 1
-        searchViewModel.onErrorHandler = { [weak self] message in
+        viewModel.onErrorHandler = { [weak self] message in
             self?.source?.showAlert(message: message)
         }
     }
@@ -185,12 +152,12 @@ extension MovieListCollectionView: UICollectionViewDataSource {
         if section == 0 {
             return 0
         }
-        return viewModel.allMovies.value.count
+        return viewModel.allMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as! MovieCell
-        let array = viewModel.allMovies.value
+        let array = viewModel.allMovies
         let movie =  array[indexPath.row]
         
         cell.viewModel = MovieViewModel(withMovie: movie)
@@ -208,11 +175,11 @@ extension MovieListCollectionView: UICollectionViewDelegate {
         guard dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) is MovieCell else {
             return
         }
-        let array = viewModel.allMovies.value
+        let array = viewModel.allMovies
         
         let movie =  array[indexPath.row]
         
-        let viewModel = MovieDetailViewModel(withMovie: movie, service: MovieDetailService.shared)
+        let viewModel = MovieDetailViewModel(movie, MovieDetailService.shared)
         protocolDelegate?.openMovie(viewModel)
     }
 }

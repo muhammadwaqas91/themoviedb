@@ -26,15 +26,15 @@ class MovieCell: UICollectionViewCell {
             
             viewModel.posterPath.bind {[weak self] (path) in
                 if let path = self?.viewModel?.getFullPosterPath() {
-//                    self?.posterImageView.downloadImage(urlString: path)
-                    DispatchQueue.main.async {
-                        self?.posterImageView.image = nil
-                    }
-                    ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
-                        DispatchQueue.main.async {
-                            self?.posterImageView.image = image
-                        }
-                    })
+                    self?.posterImageView.downloadImage(urlString: path)
+//                    DispatchQueue.main.async {
+//                        self?.posterImageView.image = nil
+//                    }
+//                    ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
+//                        DispatchQueue.main.async {
+//                            self?.posterImageView.image = image
+//                        }
+//                    })
                 }
                 else {
                     DispatchQueue.main.async {

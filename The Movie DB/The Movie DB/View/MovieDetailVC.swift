@@ -39,16 +39,16 @@ class MovieDetailVC: BaseVC {
         
         viewModel.backdropPath.bind {[weak self] (path) in
             if let path = self?.viewModel?.getFullBackdropPath() {
-//                self?.backdropImageView.downloadImage(urlString: path)
+                self?.backdropImageView.downloadImage(urlString: path)
 
-                DispatchQueue.main.async {
-                    self?.backdropImageView.image = nil
-                }
-                ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
-                    DispatchQueue.main.async {
-                        self?.backdropImageView.image = image
-                    }
-                })
+//                DispatchQueue.main.async {
+//                    self?.backdropImageView.image = nil
+//                }
+//                ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
+//                    DispatchQueue.main.async {
+//                        self?.backdropImageView.image = image
+//                    }
+//                })
             }
             else {
                 DispatchQueue.main.async {
@@ -59,16 +59,16 @@ class MovieDetailVC: BaseVC {
         
         viewModel.posterPath.bind {[weak self] (path) in
             if let path = self?.viewModel?.getFullPosterPath() {
-//                self?.posterImageView.downloadImage(urlString: path)
+                self?.posterImageView.downloadImage(urlString: path)
 
-                DispatchQueue.main.async {
-                    self?.posterImageView.image = nil
-                }
-                ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
-                    DispatchQueue.main.async {
-                        self?.posterImageView.image = image
-                    }
-                })
+//                DispatchQueue.main.async {
+//                    self?.posterImageView.image = nil
+//                }
+//                ImageDownloadService.shared.downloadImage(urlString: path, success: { image in
+//                    DispatchQueue.main.async {
+//                        self?.posterImageView.image = image
+//                    }
+//                })
             }
             else {
                 DispatchQueue.main.async {

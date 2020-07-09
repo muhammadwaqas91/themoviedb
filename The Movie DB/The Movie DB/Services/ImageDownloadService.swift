@@ -15,9 +15,7 @@ protocol ImageDownloadServiceProtocol {
 
 extension ImageDownloadService {
     mutating func cancelPreviousTask() {
-        if let task = task {
-            task.cancel()
-        }
+        task?.cancel()
         task = nil
     }
 }

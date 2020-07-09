@@ -47,19 +47,14 @@ class MovieListVC: BaseVC {
 
 extension MovieListVC: MovieSearchBarDelegate {
     
-    func showHistoryTags(_ showTags: Bool, _ continueSearch: Bool) {
-        collectionView.showTags = showTags
-        collectionView.isSearching = continueSearch
-    }
-    
-    func searchBarTextDidChange(_ text: String, _ hasText: Bool) {
-        collectionView.query = text
-        
-        if hasText {
-            title = "Search Results"
+    func updateQuery(_ text: String?, _ isFirstResponder: Bool) {
+        collectionView.showTags = isFirstResponder
+        collectionView.query = text ?? ""
+        if collectionView.query.isEmpty {
+            title = "Popular Movies"
         }
         else {
-            title = "Popular Movies"
+            title = "Search Results"
         }
     }
 }
