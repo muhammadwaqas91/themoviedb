@@ -27,6 +27,7 @@ class MovieSearchBar: UISearchBar {
     override func awakeFromNib() {
         super.awakeFromNib()
         delegate = self
+        placeholder = "Search"
     }
 }
 

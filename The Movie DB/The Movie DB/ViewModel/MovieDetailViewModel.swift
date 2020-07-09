@@ -9,12 +9,13 @@
 import Foundation
 
 protocol MovieDetailViewModelProtocol: MovieViewModelProtocol {
-    var movieDetail: MovieDetail?  { get }
     var genreTitle: Dynamic<String?> { get }
     var duration: Dynamic<String?> { get }
     var tagline: Dynamic<String?> { get }
+    var movieDetail: MovieDetail? { get }
+    var service: MovieDetailServiceProtocol? { get }
     
-    static func getDuration(_ duration: Int?) -> String
+    static func getDuration(_ duration: Int64?) -> String
 }
 
 class MovieDetailViewModel: NSObject, MovieDetailViewModelProtocol {
@@ -40,14 +41,14 @@ class MovieDetailViewModel: NSObject, MovieDetailViewModelProtocol {
     var onErrorHandler: ((String?) -> Void)?
     
     var movie: Movie
+    
     var movieDetail: MovieDetail?
     var service: MovieDetailServiceProtocol?
-    
     init(_ movie: Movie, _ service: MovieDetailServiceProtocol?) {
         self.movie = movie
         self.service = service
         
-        isFavorite = Dynamic(Favorite.isFavorite(Int64(movie.id)))
+        isFavorite = Dynamic(Favorite.isFavorite(movie.id))
         
         posterPath = Dynamic(movie.posterPath)
         backdropPath = Dynamic(movie.backdropPath)
@@ -59,7 +60,25 @@ class MovieDetailViewModel: NSObject, MovieDetailViewModelProtocol {
         genreTitle = Dynamic("")
         tagline = Dynamic("")
         overview = Dynamic(movie.overview)
+        
         super.init()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(add(_:)), name: Notifications.addFavorite.value, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(remove(_:)), name: Notifications.removeFavorite.value, object: nil)
+    }
+    
+    @objc func add(_ notification: Notification) {
+        guard let movie = notification.userInfo?["movie"] as? Movie else { return }
+        if movie.id == self.movie.id {
+            isFavorite.value = true
+        }
+    }
+    
+    @objc func remove(_ notification: Notification) {
+        guard let movie = notification.userInfo?["movie"] as? Movie else { return }
+        if movie.id == self.movie.id {
+            isFavorite.value = false
+        }
     }
     
     func fetchMovieDetail() {
@@ -85,18 +104,7 @@ class MovieDetailViewModel: NSObject, MovieDetailViewModelProtocol {
         overview.value = movieDetail.overview
     }
     
-    func toggleFavorite() {
-        let value = movie.toggleFavorite(isFavorite: isFavorite.value)
-        if value {
-            Favorite.add(Int64(movie.id))
-        }
-        else {
-            Favorite.remove(Int64(movie.id))
-        }
-        isFavorite.value = value
-    }
-    
-    static func getDuration(_ duration: Int?) -> String {
+    static func getDuration(_ duration: Int64?) -> String {
         guard let duration = duration else {
             return "0s"
         }

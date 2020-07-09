@@ -33,6 +33,7 @@ protocol SearchListProtocol {
 }
 
 enum ServiceType {
+    case favorite
     case popular
     case search
 }
@@ -51,6 +52,8 @@ class MovieListViewModel: MovieListProtocol, SearchListProtocol {
             switch serviceType {
             case .popular, .search:
                 fetchFreshMovies()
+            case .favorite:
+                fetchFavoriteMovies()
             }
         }
     }
@@ -60,7 +63,11 @@ class MovieListViewModel: MovieListProtocol, SearchListProtocol {
     }
     
     func fetchMovies(after: Int) {
-        if (after == allMovies.count - 1) || allMovies.count == 0 && page < totalPages  {
+        
+        let isLast = after == allMovies.count - 1
+        let hasMore = page < totalPages
+        
+        if isLast && hasMore || allMovies.isEmpty && hasMore  {
             let next = page + 1
             var params: [String: Any] = ["page": next]
             switch serviceType {
@@ -69,7 +76,10 @@ class MovieListViewModel: MovieListProtocol, SearchListProtocol {
             case .search:
                 params["query"] = query
                 fetchSearchMovies(params)
+            case .favorite:
+                fetchFavoriteMovies()
             }
+            
         }
     }
     
@@ -100,6 +110,13 @@ class MovieListViewModel: MovieListProtocol, SearchListProtocol {
             }
         }
     }
+    
+    private func fetchFavoriteMovies() {
+        totalPages = 0
+        allMovies = Favorite.favorites()
+        newMovies.value = allMovies
+    }
+    
     
     private func sendRequest(_ params: [String: Any], success: ((MovieList) -> ())? = nil) {
         MovieListService.shared.fetchMovies(serviceType, params, success: {[weak self] (movieList) in

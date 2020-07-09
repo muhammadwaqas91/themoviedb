@@ -12,15 +12,15 @@ import Foundation
 
 protocol MovieProtocol {
     var popularity: Double? { get }
-    var voteCount: Int? { get }
+    var voteCount: Int64? { get }
     var video: Bool? { get }
     var posterPath: String? { get }
-    var id: Int { get }
+    var id: Int64 { get }
     var adult: Bool? { get }
     var backdropPath: String? { get }
     var originalLanguage: String? { get }
     var originalTitle: String? { get }
-    var genreIds: [Int]? { get }
+    var genreIds: [Int64]? { get }
     var title: String? { get }
     var voteAverage: Double? { get }
     var overview: String? { get }
@@ -39,16 +39,16 @@ extension MovieProtocol {
     }
 }
 
-struct Movie: Decodable, MovieProtocol, Equatable {
+struct Movie: Codable, MovieProtocol, Equatable {
     var popularity: Double?
     
-    var voteCount: Int?
+    var voteCount: Int64?
     
     var video: Bool?
     
     var posterPath: String?
     
-    var id: Int
+    var id: Int64
     
     var adult: Bool?
     
@@ -58,7 +58,7 @@ struct Movie: Decodable, MovieProtocol, Equatable {
     
     var originalTitle: String?
     
-    var genreIds: [Int]?
+    var genreIds: [Int64]?
     
     var title: String?
     

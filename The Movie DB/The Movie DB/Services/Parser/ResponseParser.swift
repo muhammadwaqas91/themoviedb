@@ -125,9 +125,6 @@ extension JSONDecoderProtocol {
                 failure?(error.localizedDescription)
             }
         }
-        else {
-            failure?("No data available")
-        }
     }
 }
 

@@ -27,13 +27,17 @@ struct MovieListService : RequestServiceProtocol, URLEncodingProtocol, ResponseH
         
         cancelPreviousTask()
         
-        var endPoint: String
+        var endPoint: String = ""
         switch serviceType {
         case .popular:
             endPoint = Constants.popular
         case .search:
             endPoint = Constants.search
+            
+        default:
+            print("default called")
         }
+        
         
         let urlString = encodedString(endPoint: endPoint, params: params)
         let headers = ["Content-Type" : "application/json; charset=utf-8"]

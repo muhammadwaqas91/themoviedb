@@ -40,6 +40,7 @@ class MovieListVC: BaseVC {
         
         collectionView.source = self
         collectionView.protocolDelegate = self
+        collectionView.serviceType = .popular
         
         searchBar.movieSearchBarDelegate = self
     }

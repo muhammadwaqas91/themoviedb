@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MovieViewModelProtocol: ErrorHandlerProtocol {
-    var movie: Movie { get }
+    var movie: Movie { get set }
     var isFavorite: Dynamic<Bool> { get }
     
     var backdropPath: Dynamic<String?> { get }
@@ -21,7 +21,7 @@ protocol MovieViewModelProtocol: ErrorHandlerProtocol {
     
     var onErrorHandler: ((String?) -> Void)? { get }
     
-    func toggleFavorite()
+    mutating func toggleFavorite()
     func getFullPosterPath() -> String?
     func getFullBackdropPath() -> String?
     
@@ -47,7 +47,7 @@ extension MovieViewModelProtocol {
         return nil
     }
     
-    static func secondsToHoursMinutesSeconds (_ seconds : Int) -> (h: Int, m: Int, s: Int) {
+    static func secondsToHoursMinutesSeconds (_ seconds : Int64) -> (h: Int64, m: Int64, s: Int64) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
@@ -58,9 +58,22 @@ extension MovieViewModelProtocol {
         let releaseYear: String = String(releaseDate.split(separator: "-").first ?? "")
         return releaseYear
     }
+    
+    mutating func toggleFavorite() {
+        let value = movie.toggleFavorite(isFavorite: isFavorite.value)
+        if value {
+            isFavorite.value = Favorite.add(movie)
+        }
+        else {
+            Favorite.remove(movie)
+            isFavorite.value = false
+        }
+    }
 }
  
 class MovieViewModel: NSObject, MovieViewModelProtocol {
+    
+    
     var posterPath: Dynamic<String?>
     var title: Dynamic<String?>
     var releaseDate: Dynamic<String?>
@@ -72,8 +85,9 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
     
     var movie: Movie
     
-    init(withMovie movie: Movie) {
+    init(_ movie: Movie) {
         self.movie = movie
+        
         isFavorite = Dynamic(Favorite.isFavorite(Int64(movie.id)))
         
         posterPath = Dynamic(movie.posterPath)
@@ -84,26 +98,11 @@ class MovieViewModel: NSObject, MovieViewModelProtocol {
         super.init()
     }
     
-    
-    
-    
     func updateValues(movie: Movie) {
-        
         posterPath.value = movie.posterPath
         backdropPath.value = movie.backdropPath
         title.value = movie.title
         releaseDate.value = MovieViewModel.getReleaseYear(movie.releaseDate)
         overview.value = movie.overview
-    }
-    
-    func toggleFavorite() {
-        let value = movie.toggleFavorite(isFavorite: isFavorite.value)
-        if value {
-            Favorite.add(Int64(movie.id))
-        }
-        else {
-            Favorite.remove(Int64(movie.id))
-        }
-        isFavorite.value = value
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MovieDetailServiceProtocol {
-    mutating func getMovieDetail(movie_id: Int, params: [String: Any], success:@escaping (MovieDetail) -> (), failure: ((String?) -> Void)?)
+    mutating func getMovieDetail(movie_id: Int64, params: [String: Any], success:@escaping (MovieDetail) -> (), failure: ((String?) -> Void)?)
 }
 
 extension MovieDetailService {
@@ -24,7 +24,7 @@ struct MovieDetailService: RequestServiceProtocol, URLEncodingProtocol, Response
     static let shared = MovieDetailService()
     var task : URLSessionTask?
     
-    mutating func getMovieDetail(movie_id: Int, params: [String: Any] = [:], success:@escaping (MovieDetail) -> (), failure: ((String?) -> Void)? = nil) {
+    mutating func getMovieDetail(movie_id: Int64, params: [String: Any] = [:], success:@escaping (MovieDetail) -> (), failure: ((String?) -> Void)? = nil) {
         
         // cancel previous request if already in progress
 //        cancelPreviousTask()

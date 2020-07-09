@@ -11,8 +11,9 @@
 		D8390473194F920B6B6BC0F6 /* Pods_The_Movie_DBTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EAF592F9C192C843FE6B1C6 /* Pods_The_Movie_DBTests.framework */; };
 		FB7C127654EE159DA9C8EE59 /* Pods_The_Movie_DB_The_Movie_DBUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AAA01CB7A539668748AB99 /* Pods_The_Movie_DB_The_Movie_DBUITests.framework */; };
 		FD0A92CD24B0D45F001A7595 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0A92CC24B0D45F001A7595 /* History.swift */; };
-		FD0A92CF24B0D4B7001A7595 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0A92CE24B0D4B7001A7595 /* Favorite.swift */; };
 		FD0D180524AAA69600BE5CB2 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0D180424AAA69600BE5CB2 /* Reachability.swift */; };
+		FD17B35324B7377C0091BC9E /* FavoriteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD17B35224B7377C0091BC9E /* FavoriteListVC.swift */; };
+		FD17B35524B7455A0091BC9E /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD17B35424B7455A0091BC9E /* Favorite.swift */; };
 		FD2EC4A524A7A5B900895D94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2EC4A324A7A5B900895D94 /* Main.storyboard */; };
 		FD2EC4AA24A7A5BD00895D94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2EC4A924A7A5BD00895D94 /* Assets.xcassets */; };
 		FD2EC4AD24A7A5BD00895D94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2EC4AB24A7A5BD00895D94 /* LaunchScreen.storyboard */; };
@@ -83,10 +84,11 @@
 		B6BC29BAED8D988B92B8414C /* Pods-The Movie DB-The Movie DBUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-The Movie DB-The Movie DBUITests.debug.xcconfig"; path = "Target Support Files/Pods-The Movie DB-The Movie DBUITests/Pods-The Movie DB-The Movie DBUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DEAD3E8F8DB48E68ADB34A9E /* Pods-The Movie DB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-The Movie DB.release.xcconfig"; path = "Target Support Files/Pods-The Movie DB/Pods-The Movie DB.release.xcconfig"; sourceTree = "<group>"; };
 		FD0A92CC24B0D45F001A7595 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
-		FD0A92CE24B0D4B7001A7595 /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		FD0A92D424B14CEF001A7595 /* The_Movie_DB 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "The_Movie_DB 2.xcdatamodel"; sourceTree = "<group>"; };
 		FD0A92D524B15DCF001A7595 /* The_Movie_DB 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "The_Movie_DB 3.xcdatamodel"; sourceTree = "<group>"; };
 		FD0D180424AAA69600BE5CB2 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		FD17B35224B7377C0091BC9E /* FavoriteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListVC.swift; sourceTree = "<group>"; };
+		FD17B35424B7455A0091BC9E /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		FD2EC49A24A7A5B900895D94 /* The Movie DB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Movie DB.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2EC4A424A7A5B900895D94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD2EC4A924A7A5BD00895D94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				FDE28FA024AC345F00E8D841 /* HistoryTagView.xib */,
 				FD8720E424B0AD9800012D65 /* MovieListCollectionView.swift */,
 				FD70DDD924A948C200FCFAAF /* MovieListVC.swift */,
+				FD17B35224B7377C0091BC9E /* FavoriteListVC.swift */,
 				FD70DDF424AA0BEA00FCFAAF /* MovieDetailVC.swift */,
 				FD70DDDB24A94AF100FCFAAF /* MovieCell.swift */,
 				FD70DDDC24A94AF100FCFAAF /* MovieCell.xib */,
@@ -286,7 +289,7 @@
 			children = (
 				FD2EC4DE24A7A7B800895D94 /* The_Movie_DB.xcdatamodeld */,
 				FD0A92CC24B0D45F001A7595 /* History.swift */,
-				FD0A92CE24B0D4B7001A7595 /* Favorite.swift */,
+				FD17B35424B7455A0091BC9E /* Favorite.swift */,
 				FD8C11E424B3710100E466E1 /* CoreDataManager */,
 			);
 			path = CoreData;
@@ -619,17 +622,18 @@
 				FD70DDF324AA0B9000FCFAAF /* Router.swift in Sources */,
 				FDE28F9824AC171900E8D841 /* MovieSearchBar.swift in Sources */,
 				FDE28FA124AC345F00E8D841 /* HistoryTagView.swift in Sources */,
+				FD17B35524B7455A0091BC9E /* Favorite.swift in Sources */,
 				FD70DDE724A9669A00FCFAAF /* MovieListViewModel.swift in Sources */,
 				FDE28F8E24ABB24900E8D841 /* MovieListService.swift in Sources */,
 				FD70DDDA24A948C200FCFAAF /* MovieListVC.swift in Sources */,
 				FD70DDCA24A7BE6100FCFAAF /* Constant Keys.swift in Sources */,
 				FD84288024B618210032B087 /* MovieDetailService.swift in Sources */,
-				FD0A92CF24B0D4B7001A7595 /* Favorite.swift in Sources */,
 				FD8C11E124B370F300E466E1 /* CoreDataManager.swift in Sources */,
 				FDE28F7D24AB830400E8D841 /* ImageDownloadService.swift in Sources */,
 				FD70DDE524A955BF00FCFAAF /* Movie.swift in Sources */,
 				FD70DDF124A9E6CA00FCFAAF /* Configuration.swift in Sources */,
 				FD70DDEB24A9988600FCFAAF /* MovieViewModel.swift in Sources */,
+				FD17B35324B7377C0091BC9E /* FavoriteListVC.swift in Sources */,
 				FD84287E24B605E20032B087 /* MovieDetailViewModel.swift in Sources */,
 				FD0A92CD24B0D45F001A7595 /* History.swift in Sources */,
 				FD2EC4E224A7A7B800895D94 /* The_Movie_DB.xcdatamodeld in Sources */,

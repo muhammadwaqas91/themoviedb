@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 
-
-protocol MovieListCollectionViewProtocol: NSObjectProtocol {
+@objc
+protocol MovieListCollectionViewProtocol: class {
     func openMovie(_ viewModel: MovieDetailViewModel)
-    func tagPressed(_ tag: String)
+    @objc
+    optional func tagPressed(_ tag: String)
 }
 
 class MovieListCollectionView: UICollectionView {
@@ -29,14 +30,23 @@ class MovieListCollectionView: UICollectionView {
                 // empty searchBar begin/end editing or has text but is trying paging
             }
             else if query.isEmpty && !oldValue.isEmpty {
-                viewModel.serviceType = .popular
+                serviceType = .popular
             }
             else {
                 viewModel.query = query
-                viewModel.serviceType = .search
+                serviceType = .search
             }
         }
     }
+    
+    var serviceType: ServiceType? {
+        didSet {
+            if let serviceType = serviceType {
+                viewModel.serviceType = serviceType
+            }
+        }
+    }
+    
     
     var showTags: Bool = false {
         didSet {
@@ -61,8 +71,47 @@ class MovieListCollectionView: UICollectionView {
         setFlowLayoutSize()
         bindViewModels()
         
-        viewModel.serviceType = .popular
+        NotificationCenter.default.addObserver(self, selector: #selector(add(_:)), name: Notifications.addFavorite.value, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(remove(_:)), name: Notifications.removeFavorite.value, object: nil)
     }
+    
+    @objc func add(_ notification: Notification) {
+        guard let movie = notification.userInfo?["movie"] as? Movie else { return }
+        if serviceType == .favorite {
+            viewModel.allMovies.insert(movie, at: 0)
+            let indexPath: IndexPath = IndexPath(item: 0, section: 1)
+            performBatchUpdates({
+                insertItems(at: [indexPath])
+            }, completion: nil)
+        }
+        else {
+            guard let index = viewModel.allMovies.firstIndex(of: movie) else { return }
+            let indexPath: IndexPath = IndexPath(item: index, section: 1)
+            
+            guard let cell = dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as? MovieCell else { return }
+            cell.favButton.isSelected = true
+            reloadItems(at: [indexPath])
+        }
+    }
+    
+    @objc func remove(_ notification: Notification) {
+        guard let movie = notification.userInfo?["movie"] as? Movie else { return }
+        guard let index = viewModel.allMovies.firstIndex(of: movie) else { return }
+        let indexPath: IndexPath = IndexPath(item: index, section: 1)
+        
+        if serviceType == .favorite {
+            viewModel.allMovies.remove(at: index)
+            performBatchUpdates({
+                deleteItems(at: [indexPath])
+            }, completion: nil)
+        }
+        else {
+            guard let cell = dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as? MovieCell else { return }
+            cell.favButton.isSelected = false
+            reloadItems(at: [indexPath])
+        }
+    }
+    
     
     private func setFlowLayoutSize() {
         collectionViewLayout.invalidateLayout()
@@ -71,7 +120,7 @@ class MovieListCollectionView: UICollectionView {
         
         let height = frame.size.height
         let width = frame.size.width
-        layout.itemSize = CGSize(width: width * 0.45, height: height * 0.45)
+        layout.itemSize = CGSize(width: width * 0.45, height: height * 0.50)
         
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
@@ -81,7 +130,7 @@ class MovieListCollectionView: UICollectionView {
     private func bindViewModels() {
         viewModel.newMovies.bind { [weak self] _ in
             DispatchQueue.main.async {
-                guard let newMovies = self?.viewModel.newMovies.value, let allMovies = self?.viewModel.allMovies, newMovies.count > 0 && allMovies.count > newMovies.count  else {
+                guard let newMovies = self?.viewModel.newMovies.value, let allMovies = self?.viewModel.allMovies, newMovies.count > 0 && (allMovies.count > newMovies.count)  else {
                     UIView.animate(withDuration: 0) {
                         self?.performBatchUpdates({
                             self?.reloadSections(IndexSet(integer: 1))
@@ -160,7 +209,7 @@ extension MovieListCollectionView: UICollectionViewDataSource {
         let array = viewModel.allMovies
         let movie =  array[indexPath.row]
         
-        cell.viewModel = MovieViewModel(withMovie: movie)
+        cell.viewModel = MovieViewModel(movie)
         
         return cell
     }
@@ -203,7 +252,7 @@ extension MovieListCollectionView: UICollectionViewDelegateFlowLayout {
 
 extension MovieListCollectionView: HistoryTagViewDelegate {
     func tagPressed(_ tag: String) {
-        protocolDelegate?.tagPressed(tag)
+        protocolDelegate?.tagPressed?(tag)
     }
     
     func tagRemove(_ tag: String) {

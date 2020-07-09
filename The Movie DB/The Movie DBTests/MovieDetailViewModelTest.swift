@@ -66,7 +66,7 @@ class MovieDetailViewModelTest: XCTestCase {
 
 fileprivate struct MockService: MovieDetailServiceProtocol {
     var movieDetail : MovieDetail?
-    func getMovieDetail(movie_id: Int, params: [String : Any], success: @escaping (MovieDetail) -> (), failure: ((String?) -> Void)?) {
+    mutating func getMovieDetail(movie_id: Int64, params: [String : Any], success: @escaping (MovieDetail) -> (), failure: ((String?) -> Void)?) {
         if let movieDetail = movieDetail {
             success(movieDetail)
         }

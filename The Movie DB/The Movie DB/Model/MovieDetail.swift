@@ -9,11 +9,11 @@
 import Foundation
 
 protocol MovieDetailProtocol: MovieProtocol {
-    var budget: Int? { get }
+    var budget: Int64? { get }
     var homepage: String? { get }
     var imdbId: String? { get }
-    var revenue: Int? { get }
-    var runtime: Int? { get }
+    var revenue: Int64? { get }
+    var runtime: Int64? { get }
     var status: String? { get }
     var tagline: String? { get }
     
@@ -24,15 +24,15 @@ protocol MovieDetailProtocol: MovieProtocol {
 }
 
 struct MovieDetail: Decodable, MovieDetailProtocol {
-    var budget: Int?
+    var budget: Int64?
     
     var homepage: String?
     
     var imdbId: String?
     
-    var revenue: Int?
+    var revenue: Int64?
     
-    var runtime: Int?
+    var runtime: Int64?
     
     var status: String?
     
@@ -40,7 +40,7 @@ struct MovieDetail: Decodable, MovieDetailProtocol {
     
     var video: Bool?
     
-    var voteCount: Int?
+    var voteCount: Int64?
     
     var genres: [Genre]?
     
@@ -54,7 +54,7 @@ struct MovieDetail: Decodable, MovieDetailProtocol {
     
     var posterPath: String?
     
-    var id: Int
+    var id: Int64
     
     var adult: Bool?
     
@@ -64,7 +64,7 @@ struct MovieDetail: Decodable, MovieDetailProtocol {
     
     var originalTitle: String?
     
-    var genreIds: [Int]?
+    var genreIds: [Int64]?
     
     var title: String?
     

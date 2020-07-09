@@ -19,7 +19,6 @@ struct Constants {
     static let configuration = "/configuration"
 }
 
-// MARK:- CoreData Configuration
 
 // entity names
 struct Entity {
@@ -27,9 +26,14 @@ struct Entity {
     static let History = "History"
 }
 
-// entities attributes
-struct Attributes  {
-    static let id = "id"
-    static let tag = "tag"
+enum Notifications: String {
+    case addFavorite = "addFavorite"
+    case removeFavorite = "removeFavorite"
+    
+    var value: NSNotification.Name {
+        get {
+            NSNotification.Name(self.rawValue)
+        }
+    }
 }
 
