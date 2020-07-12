@@ -57,3 +57,20 @@ extension Favorite {
         return movies
     }
 }
+
+extension Favorite: CodableManagedObjectProtocol {
+    
+    public enum CodingKeys: String, CodingKey {
+        case id
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+    }
+    
+    public func setValues(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int64.self, forKey: .id)
+    }
+}

@@ -22,7 +22,7 @@ extension ConfigurationService {
 struct ConfigurationService : RequestServiceProtocol, URLEncodingProtocol, ResponseHandlerProtocol, ConfigurationServiceProtocol {
     
     static var shared = ConfigurationService()
-    var configuration: Configuration?
+    var configuration: Configuration? = Configuration.configuration()
     var task : URLSessionTask?
     
     mutating func getConfigurations(params: [String: Any] = [:], success:@escaping (Configuration) -> (), failure: ((String?) -> Void)? = nil) {

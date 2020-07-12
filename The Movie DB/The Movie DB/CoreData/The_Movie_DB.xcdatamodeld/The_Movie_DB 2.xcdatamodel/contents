@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F94a" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Configuration" representedClassName="Configuration" syncable="YES" codeGenerationType="class">
+        <attribute name="changeKeys" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="images" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="Images"/>
+    </entity>
     <entity name="Favorite" representedClassName="Favorite" syncable="YES" codeGenerationType="class">
         <attribute name="adult" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="backdropPath" optional="YES" attributeType="String"/>
@@ -21,6 +25,7 @@
         <attribute name="timeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
+        <element name="Configuration" positionX="-54" positionY="90" width="128" height="73"/>
         <element name="Favorite" positionX="-63" positionY="-18" width="128" height="253"/>
         <element name="History" positionX="-54" positionY="-9" width="128" height="73"/>
     </elements>

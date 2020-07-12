@@ -89,6 +89,7 @@ class MovieListViewModel: MovieListProtocol, SearchListProtocol {
         }
         else {
             ConfigurationService.shared.getConfigurations(success: {[weak self] (configuration) in
+                CoreDataManager.saveContext()
                 ConfigurationService.shared.configuration = configuration
                 self?.sendRequest(params)
             })

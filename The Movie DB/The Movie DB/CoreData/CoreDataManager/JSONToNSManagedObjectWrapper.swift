@@ -98,9 +98,8 @@ extension CoreDataManager: JSONToNSManagedObjectProtocol {
     
     
     
-    
-    // use these methods
-    
+    // MARK: Save (Create or Update)
+        
     static func save(_ json: [String : Any], _ entityName: String, _ id: Int64) -> NSManagedObject? {
         return update(json, entityName, id)
     }

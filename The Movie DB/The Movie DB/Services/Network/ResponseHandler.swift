@@ -30,7 +30,7 @@ extension URLEncodingProtocol {
 
 protocol ResponseHandlerProtocol: ResponseParserProtocol {
     
-    static func result<T: NSManagedObject & Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void)
+    static func result<T: CodableManagedObjectProtocol>(success: @escaping (T) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void)
     
     static func result<T: Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)?) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void)
     
@@ -41,7 +41,7 @@ protocol ResponseHandlerProtocol: ResponseParserProtocol {
 }
 
 extension ResponseHandlerProtocol {
-    static func result<T: NSManagedObject & Decodable>(success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
+    static func result<T: CodableManagedObjectProtocol>(success: @escaping (T) -> Void, failure: ((String?) -> Void)? = nil) -> ((_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
         return { data, response, error in
             DispatchQueue.global(qos: .background).async(execute: {
                 ResponseParser.parse(data: data, response: response, error: error, success: success, failure: failure)

@@ -22,6 +22,7 @@ struct Constants {
 
 // entity names
 struct Entity {
+    static let Configuration = "Configuration"
     static let Favorite = "Favorite"
     static let History = "History"
 }

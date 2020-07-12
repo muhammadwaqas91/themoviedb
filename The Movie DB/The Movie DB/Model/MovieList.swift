@@ -13,4 +13,5 @@ import Foundation
 struct MovieList: Decodable {
     let page, totalResults, totalPages: Int
     let results: [Movie]
+    let favorites: [Favorite]?
 }
