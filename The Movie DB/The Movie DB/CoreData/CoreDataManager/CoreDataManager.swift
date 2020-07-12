@@ -83,4 +83,8 @@ class CoreDataManager   {
     static func saveContext() {
         stack.saveContext()
     }
+    
+    static func viewContext() -> NSManagedObjectContext {
+        return stack.persistentContainer.viewContext
+    }
 }
